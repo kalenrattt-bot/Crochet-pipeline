@@ -392,7 +392,7 @@ async function runClip(clip){
 async function runGPT(clip,refs,prompt,ar){
   stat(clip.id,'⏳ Creating image task…','sl');
   const res=getSetting(clip.id,'res')||'1K';
-  const data=await proxyCall('generate_image_gpt',{prompt,aspect_ratio:ar,resolution:res,...(refs.length?{input_urls:refs.slice(0,4)}:{})});
+  const data=await proxyCall('generate_image_gpt',{prompt,aspect_ratio:ar,resolution:res,...(refs.length?{input_urls:refs.slice(0,16)}:{})});
   const taskId=data?.data?.taskId;
   if(!taskId) throw new Error('No task ID: '+JSON.stringify(data));
   stat(clip.id,'⏳ Waiting for image (~30s)…','sl');
