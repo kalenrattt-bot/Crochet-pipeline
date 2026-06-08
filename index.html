@@ -138,10 +138,10 @@ const VIDEOS = [
         aspect:'9:16', resolution:'1K'
       },
       {
-        id:'c2', label:'Clip 1 — Expo Reveal Hook Video', model:'kling', type:'video',
-        refs:['c1_img'],
+        id:'c2', label:'Clip 1 — Expo Reveal Hook Video', model:'seedance', type:'video',
+        refs:['c1_img','girl','blue_bouquet','stall'],
         notes:'🎬 Seedance 2.0 — she counts 3-2-1, lifts cloth, people laugh, she stands disappointed',
-        prompt:'The girl counts down 3 2 1 and lifts the cloth off her table to reveal her blue crochet flower bouquets. The people around her start laughing. She stands there with a disappointed blank expression. Candid bystander POV. Camera mostly still. Natural daylight. No UI. iPhone 14 quality.',
+        prompt:'The girl counts down 3 2 1 and lifts the cloth off her table to reveal her blue crochet flower bouquets — wrapped in blue and cream paper with ribbon, exactly like the reference. The people around her start laughing. She stands there with a disappointed blank expression. Candid bystander POV. Camera mostly still. Natural daylight. No UI. iPhone 14 quality.',
         aspect:'9:16', duration:'5', sound:true
       },
       {
@@ -269,7 +269,7 @@ function renderPipeline(){
 function buildClip(clip){
   const div=document.createElement('div');div.className='clip';
   const mc={gpt:'tgpt',kling:'tkling',seedance:'tseed'};
-  const ml={gpt:'GPT Image 2',kling:'Kling 3.0',seedance:'Kling 3.0'};
+  const ml={gpt:'GPT Image 2',kling:'Kling 3.0',seedance:'Seedance 2.0'};
   const bc={gpt:'rg',kling:'rk',seedance:'rs'};
   const bt=clip.type==='image'?'🖼 Generate Image':'🎬 Generate Video';
   const chains=clip.refs.filter(r=>r.includes('_img')).map(r=>`<div class="chain-row">↳ uses ${r} from previous step</div>`).join('');
@@ -417,7 +417,7 @@ async function runSeedance(clip,refs,prompt,ar){
   stat(clip.id,'⏳ Creating video task…','sl');
   const dur=parseInt(getSetting(clip.id,'dur')||'5');
   const sound=isSoundOn(clip.id);
-  const data=await proxyCall('generate_video_seedance',{prompt,duration:dur,aspect_ratio:ar,resolution:'720p',generate_audio:sound,...(refs[0]?{first_frame_url:refs[0]}:{})});
+  const data=await proxyCall('generate_video_seedance',{prompt,duration:dur,aspect_ratio:ar,resolution:'720p',generate_audio:sound,...(refs[0]?{first_frame_url:refs[0]}:{}),...(refs.length>1?{reference_image_urls:refs.slice(1,4)}:{})});
   const taskId=data?.data?.taskId;
   if(!taskId) throw new Error('No task ID: '+JSON.stringify(data));
   stat(clip.id,'⏳ Waiting for video (~2min)…','sl');
