@@ -66,7 +66,7 @@ input[type=file]{display:none}
 .run-btn:disabled{opacity:.35;cursor:not-allowed}
 .run-btn.rg{background:var(--gpt-bg);color:var(--gpt);border:1px solid var(--gpt-border)}.run-btn.rg:hover:not(:disabled){background:#261a00}
 .run-btn.rk{background:var(--kling-bg);color:var(--kling);border:1px solid var(--kling-border)}.run-btn.rk:hover:not(:disabled){background:#1c1040}
-.run-btn.rs{background:var(--seed-bg);color:var(--seed);border:1px solid var(--seed-border)}.run-btn.rs:hover:not(:disabled){background:#0d2236}
+.run-btn.rk{background:var(--seed-bg);color:var(--seed);border:1px solid var(--seed-border)}.run-btn.rk:hover:not(:disabled){background:#0d2236}
 .rarea{margin-top:7px}
 .smsg{font-size:11px;padding:8px;text-align:center;background:#0a0a0a;border:1px solid var(--border);border-radius:5px;font-family:'DM Mono',monospace}
 .sl{color:var(--kling)}.se{color:#f87171}.ss{color:var(--gpt)}
@@ -87,7 +87,7 @@ input[type=file]{display:none}
 <body>
 <div class="header">
   <h1>🌸 Crochet <span>Pipeline</span> v4</h1>
-  <p>gpt image 2 → seedance 2.0 (hook) + kling 3.0 (b-roll) // american pie</p>
+  <p>gpt image 2 → kling 3.0 (all videos) + kling 3.0 (b-roll) // american pie</p>
 </div>
 
 <div class="global-refs">
@@ -138,7 +138,7 @@ const VIDEOS = [
         aspect:'9:16', resolution:'1K'
       },
       {
-        id:'c2', label:'Clip 1 — Expo Reveal Hook Video', model:'seedance', type:'video',
+        id:'c2', label:'Clip 1 — Expo Reveal Hook Video', model:'kling', type:'video',
         refs:['c1_img'],
         notes:'🎬 Seedance 2.0 — she counts 3-2-1, lifts cloth, people laugh, she stands disappointed',
         prompt:'The girl counts down 3 2 1 and lifts the cloth off her table to reveal her blue crochet flower bouquets. The people around her start laughing. She stands there with a disappointed blank expression. Candid bystander POV. Camera mostly still. Natural daylight. No UI. iPhone 14 quality.',
@@ -269,7 +269,7 @@ function renderPipeline(){
 function buildClip(clip){
   const div=document.createElement('div');div.className='clip';
   const mc={gpt:'tgpt',kling:'tkling',seedance:'tseed'};
-  const ml={gpt:'GPT Image 2',kling:'Kling 3.0',seedance:'Seedance 2.0'};
+  const ml={gpt:'GPT Image 2',kling:'Kling 3.0',seedance:'Kling 3.0'};
   const bc={gpt:'rg',kling:'rk',seedance:'rs'};
   const bt=clip.type==='image'?'🖼 Generate Image':'🎬 Generate Video';
   const chains=clip.refs.filter(r=>r.includes('_img')).map(r=>`<div class="chain-row">↳ uses ${r} from previous step</div>`).join('');
