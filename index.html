@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Crochet Pipeline v5</title>
+<title>Crochet Pipeline v6</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
@@ -67,21 +67,19 @@ input[type=file]{display:none}
 .rarea{margin-top:7px}
 .smsg{font-size:11px;padding:8px;text-align:center;background:#0a0a0a;border:1px solid var(--border);border-radius:5px;font-family:'DM Mono',monospace}
 .sl{color:var(--kling)}.se{color:#f87171}.ss{color:var(--gpt)}
-.rimg{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:6px;display:block;border:1px solid var(--border);margin-bottom:5px}
-.rimg.landscape{aspect-ratio:16/9}.rimg.square{aspect-ratio:1/1}
-.rvid{width:100%;aspect-ratio:9/16;border-radius:6px;display:block;border:1px solid var(--border);margin-bottom:5px}
-.rvid.landscape{aspect-ratio:16/9}.rvid.square{aspect-ratio:1/1}
+.rimg{width:100%;max-height:280px;object-fit:cover;border-radius:6px;display:block;border:1px solid var(--border);margin-bottom:5px}
+.rvid{width:100%;max-height:280px;border-radius:6px;display:block;border:1px solid var(--border);margin-bottom:5px}
 .result-btns{display:flex;gap:5px}
 .pbtn{flex:1;padding:5px;border:1px solid var(--gpt-border);border-radius:5px;background:transparent;color:var(--gpt);font-size:10px;cursor:pointer;font-family:'DM Mono',monospace}
 .pbtn:hover{background:var(--gpt-bg)}
-.dbtn{flex:1;padding:5px;border:1px solid var(--border2);border-radius:5px;background:transparent;color:#888;font-size:10px;cursor:pointer;font-family:'DM Mono',monospace;text-align:center;text-decoration:none;display:block}
+.dbtn{flex:1;padding:5px;border:1px solid var(--border2);border-radius:5px;background:transparent;color:#888;font-size:10px;font-family:'DM Mono',monospace;text-align:center;text-decoration:none;display:block}
 .dbtn:hover{background:var(--surface2);color:#ccc}
 </style>
 </head>
 <body>
 <div class="header">
-  <h1>🌸 Crochet <span>Pipeline</span> v5</h1>
-  <p>gpt image 2 → kling 3.0 // reveal hook + progression + showcase</p>
+  <h1>🌸 Crochet <span>Pipeline</span> v6</h1>
+  <p>gpt image 2 → kling 3.0 // car hater hook + mixed b-roll</p>
 </div>
 
 <div class="global-refs">
@@ -98,105 +96,136 @@ const STORE = {
   girl: 'https://i.ibb.co/hx9BWcYk/b8c6e5d1a850216f407402376a826deb.jpg',
   stall: 'https://i.ibb.co/QFy18YnS/Stallphoto1.jpg',
   garage: 'https://i.ibb.co/XfB0LL4D/83b912ea00c0113ad43d6ecc077330fc-1780564197-fastag2a.jpg',
+  car_stall: 'https://i.ibb.co/4RgcSNsf/CAR-STALL-PHOTO.jpg',
   blue_bouquet: 'https://i.ibb.co/QvyqVxPj/Blue.jpg',
   pink_bouquet: 'https://i.ibb.co/0RSL2JZ5/Pink.jpg',
   yellow_bouquet: 'https://i.ibb.co/k6g4MLJk/Yellow.jpg',
-  extra1: '', extra2: '', extra3: ''
+  dye: 'https://i.ibb.co/1JpttZCj/Young-girl-dipping-yarn.jpg',
+  extra1: '', extra2: ''
 };
 const get = k => STORE[k]||null;
 const set = (k,v) => { STORE[k]=v; };
 
 const GLOBALS = [
   {key:'girl',label:'Girl ref'},{key:'stall',label:'Stall ref'},{key:'garage',label:'Garage ref'},
-  {key:'blue_bouquet',label:'Blue bouquet'},{key:'pink_bouquet',label:'Pink bouquet'},{key:'yellow_bouquet',label:'Yellow bouquet'},
-  {key:'extra1',label:'Extra ref 1'},{key:'extra2',label:'Extra ref 2'},{key:'extra3',label:'Extra ref 3'}
+  {key:'car_stall',label:'Car stall ref'},{key:'blue_bouquet',label:'Blue bouquet'},{key:'pink_bouquet',label:'Pink bouquet'},
+  {key:'yellow_bouquet',label:'Yellow bouquet'},{key:'dye',label:'Dye ref'},
+  {key:'extra1',label:'Extra ref 1'},{key:'extra2',label:'Extra ref 2'}
 ];
 
 const VIDEOS = [
   {
-    id:'v1', title:'Video — Reveal Hook + Progression + Showcase',
+    id:'v1', title:'Video — Car Hater Hook + Mixed B-Roll',
     clips:[
       {
-        id:'c1', label:'Clip 1 — Hook Image (Before Reveal)', model:'gpt', type:'image', outputKey:'c1_img',
-        refs:['girl','stall','blue_bouquet'],
-        notes:'👗 Oversized plain crewneck, jeans | 📍 Outdoor expo, centre table with cloth covering bouquets | 👥 People around filming | 🎬 Freeze frame, hand on cloth about to lift',
-        prompt:'The girl from the reference images is standing at her own table at a busy outdoor expo. Oversized plain crewneck and jeans. Her table has a cloth draped over it hiding the bouquets underneath. People around are holding phones filming her. She has her hand on the cloth about to lift it, counting down. Bystander POV, candid. Natural daylight. Freeze frame. No UI, no grain, no colour grading. iPhone 14 quality.',
+        id:'c1', label:'Hook Image — Car Stall', model:'gpt', type:'image', outputKey:'c1_img',
+        refs:['girl','car_stall','blue_bouquet'],
+        notes:'👗 Casual outfit, not adidas | 📍 Outdoor stall, car visible in frame pulling up | 🎬 Freeze frame, candid bystander POV from nearby',
+        prompt:'The girl from the reference is standing behind her outdoor crochet flower stall exactly like the car stall reference image. A car is pulling up slowly in front of her stall, only the edge of the car visible. She is looking towards the car. Blue crochet bouquets displayed on her table. Candid bystander POV from nearby. Natural daylight. Freeze frame from a video. No UI, no grain, no colour grading. iPhone 14 quality.',
         aspect:'9:16', resolution:'1K'
       },
       {
-        id:'c2', label:'Clip 1 — Hook Video', model:'kling', type:'video',
+        id:'c2', label:'Hook Video — Car Insult', model:'kling', type:'video',
         refs:['c1_img'],
-        notes:'🎬 Kling — she counts 3-2-1, lifts cloth to reveal bouquets, people laugh, she stands disappointed',
-        prompt:'The girl counts down 3 2 1 and lifts the cloth off her table to reveal her crochet flower bouquets. The people around her start laughing and snickering. She stands there with a disappointed blank expression watching them laugh. Candid bystander POV. Camera mostly still. Natural daylight. No UI. iPhone 14 quality.',
+        notes:'🎬 Man in car asks "You make those yourself?" she says yes, he says "put that effort into the gym" and drives off. She just stands there.',
+        prompt:'A man in a car slowly pulls up to the girl\'s crochet flower stall. He leans out and says "You make those yourself?" She nods and says yes. He replies "Put that effort into the gym" and drives away. She stands there watching him leave, expression drops. Candid bystander POV. Camera mostly still. Natural daylight. No UI. iPhone 14 quality.',
         aspect:'9:16', duration:'5', mode:'std', sound:true
       },
       {
-        id:'c3', label:'Clip 2 — Crocheting Kitchen Image', model:'gpt', type:'image', outputKey:'c3_img',
+        id:'c3', label:'B-Roll 1 — Crocheting Kitchen Image', model:'gpt', type:'image', outputKey:'c3_img',
         refs:['girl','blue_bouquet'],
-        notes:'👗 Oversized crewneck | 📍 Kitchen counter, natural daylight | 🎬 She is the main focus, just starting a flower, early stitches',
-        prompt:'The girl from the references is standing at her kitchen counter crocheting the very beginning of a small blue flower. She is the main focus — upper body and face visible, looking down at her work. Just the first few stitches done. Natural daylight. She does not know she is being filmed. Candid angle. Freeze frame. No UI, no grain, no colour grading. iPhone 14 quality.',
+        notes:'👗 Oversized plain hoodie | 📍 Kitchen counter, natural daylight | 🎬 She is crocheting, main focus, upper body visible',
+        prompt:'The girl from the references is standing at her kitchen counter crocheting a blue crochet flower. Plain oversized hoodie. She is the main focus — face and upper body visible, looking down focused on her work. Does not know she is being filmed. Natural daylight. Candid angle. Freeze frame. No UI, no grain, no colour grading. iPhone 14 quality.',
         aspect:'9:16', resolution:'1K'
       },
       {
-        id:'c4', label:'Clip 2 — Crocheting Kitchen Video', model:'kling', type:'video',
+        id:'c4', label:'B-Roll 1 — Crocheting Kitchen Video', model:'kling', type:'video',
         refs:['c3_img'],
-        notes:'🎬 Kling — 3s, just hands crocheting, slow, stable camera',
-        prompt:'The girl is standing at her kitchen counter crocheting the beginning of a small blue flower. She is the main focus, upper body visible, looking down at her work. Slow careful movements. Does not know she is being filmed. Fixed stable camera. Natural daylight. No UI. iPhone 14 quality.',
+        notes:'🎬 3s, crocheting, stable camera, does not look up',
+        prompt:'The girl is standing at her kitchen counter crocheting a blue flower. Plain hoodie. Main focus, upper body and face visible. Slow careful movements. Does not know she is being filmed. Fixed stable camera. Natural daylight. No UI. iPhone 14 quality.',
         aspect:'9:16', duration:'3', mode:'std', sound:false
       },
       {
-        id:'c5', label:'Clip 3 — Crocheting Bedroom Floor Image', model:'gpt', type:'image', outputKey:'c5_img',
-        refs:['girl','blue_bouquet'],
-        notes:'👗 Plain casual hoodie — different to clip 1 | 📍 Bedroom floor, sitting cross legged | 🎬 Flower halfway done',
-        prompt:'The girl from the references is sitting cross legged on a bedroom floor in a plain casual hoodie. She is the main focus — face and upper body visible, crocheting a blue flower that is now halfway complete. Does not know she is being filmed. Natural daylight from a window. Candid angle. Freeze frame. No UI, no grain, no colour grading. iPhone 14 quality.',
+        id:'c5', label:'B-Roll 2 — Dye Dipping Image', model:'gpt', type:'image', outputKey:'c5_img',
+        refs:['girl','dye','blue_bouquet'],
+        notes:'👗 Black latex gloves, casual top | 📍 Garage studio, dye tub on table | 🎬 She is dipping yarn in blue dye, main focus',
+        prompt:'The girl from the references is in her garage studio wearing black latex gloves, using tongs to dip a white yarn ball into a clear tub of swirling light blue dye. She is the main focus, face and upper body visible, focused and careful. Does not know she is being filmed. Nice natural lighting. Freeze frame. No UI, no grain, no colour grading. iPhone 14 quality.',
         aspect:'9:16', resolution:'1K'
       },
       {
-        id:'c6', label:'Clip 3 — Crocheting Bedroom Floor Video', model:'kling', type:'video',
+        id:'c6', label:'B-Roll 2 — Dye Dipping Video', model:'kling', type:'video',
         refs:['c5_img'],
-        notes:'🎬 Kling — 3s, halfway done flower, stable camera, eyes on work',
-        prompt:'The girl is sitting on the bedroom floor crocheting a halfway complete blue flower. Slow deliberate movements. Does not know she is being filmed. Eyes on her work. Fixed stable camera. Natural daylight. No UI. iPhone 14 quality.',
+        notes:'🎬 3s, slow careful dipping motion, like a scientist, stable camera',
+        prompt:'The girl is slowly and carefully dipping yarn into the blue dye using tongs. Black latex gloves. She moves with precision, focused. Does not know she is being filmed. Fixed stable camera. Natural lighting. No UI. iPhone 14 quality.',
         aspect:'9:16', duration:'3', mode:'std', sound:false
       },
       {
-        id:'c7', label:'Clip 4 — Crocheting Couch Image', model:'gpt', type:'image', outputKey:'c7_img',
+        id:'c7', label:'B-Roll 3 — Crocheting Bedroom Image', model:'gpt', type:'image', outputKey:'c7_img',
         refs:['girl','blue_bouquet'],
-        notes:'👗 Simple plain t-shirt | 📍 Couch by window, natural backlight | 🎬 Flower almost complete',
-        prompt:'The girl from the references is sitting on a couch with a window behind her. Plain t-shirt. She is the main focus — face and upper body visible, crocheting a blue flower almost complete. Does not know she is being filmed. Candid angle. Freeze frame. No UI, no grain, no colour grading. iPhone 14 quality.',
+        notes:'👗 Plain t-shirt, different to other clips | 📍 Sitting on bedroom floor, natural daylight | 🎬 Main focus, crocheting',
+        prompt:'The girl from the references is sitting cross legged on a bedroom floor in a plain t-shirt. She is the main focus — face and upper body visible, crocheting a blue flower. Does not know she is being filmed. Natural daylight from a window. Candid angle. Freeze frame. No UI, no grain, no colour grading. iPhone 14 quality.',
         aspect:'9:16', resolution:'1K'
       },
       {
-        id:'c8', label:'Clip 4 — Crocheting Couch Video', model:'kling', type:'video',
+        id:'c8', label:'B-Roll 3 — Crocheting Bedroom Video', model:'kling', type:'video',
         refs:['c7_img'],
-        notes:'🎬 Kling — 3s, almost done, backlit window, stable',
-        prompt:'The girl is sitting on a couch by a window crocheting an almost complete blue flower. Slow careful movements, nearly done. Does not know she is being filmed. Fixed stable camera, natural backlight from window. No UI. iPhone 14 quality.',
+        notes:'🎬 3s, crocheting on floor, stable camera',
+        prompt:'The girl is sitting on the bedroom floor crocheting a blue flower. Plain t-shirt. Main focus, face visible. Slow deliberate movements. Does not know she is being filmed. Fixed stable camera. Natural daylight. No UI. iPhone 14 quality.',
         aspect:'9:16', duration:'3', mode:'std', sound:false
       },
       {
-        id:'c9', label:'Clip 5 — Finishing Touches Image', model:'gpt', type:'image', outputKey:'c9_img',
-        refs:['girl','blue_bouquet'],
-        notes:'👗 Plain crewneck | 📍 Kitchen standing, minimal background | 🎬 Very last stitches on completed flower',
-        prompt:'The girl from the references is standing in her kitchen doing the very last finishing stitches on a completed blue crochet flower. Plain crewneck. Minimal kitchen background. Focused. Does not know she is being filmed. Freeze frame. Natural daylight. No UI, no grain, no colour grading. iPhone 14 quality.',
+        id:'c9', label:'B-Roll 4 — Assembly Garage Image', model:'gpt', type:'image', outputKey:'c9_img',
+        refs:['girl','garage','blue_bouquet'],
+        notes:'👗 Apron over casual top | 📍 Garage studio, different area | 🎬 Hot gluing stems to assemble bouquet',
+        prompt:'The girl from the references is in her garage studio wearing an apron over a casual top. She is hot gluing crochet flower stems together to assemble a blue bouquet. She is the main focus — face and upper body visible, focused and precise. Does not know she is being filmed. Natural studio lighting. Freeze frame. No UI, no grain, no colour grading. iPhone 14 quality.',
         aspect:'9:16', resolution:'1K'
       },
       {
-        id:'c10', label:'Clip 5 — Finishing Touches Video', model:'kling', type:'video',
+        id:'c10', label:'B-Roll 4 — Assembly Garage Video', model:'kling', type:'video',
         refs:['c9_img'],
-        notes:'🎬 Kling — 3s, very last stitches, satisfying',
-        prompt:'The girl is standing in her kitchen doing the very last few stitches on a completed blue crochet flower. Slow and careful, almost done. Does not know she is being filmed. Fixed stable camera. Natural daylight. No UI. iPhone 14 quality.',
+        notes:'🎬 3s, gluing stems, slow precise movements, stable camera',
+        prompt:'The girl is in her garage studio carefully hot gluing crochet flower stems together with a glue gun, wearing an apron. Main focus, face visible. Slow and precise. Does not know she is being filmed. Fixed stable camera. Natural lighting. No UI. iPhone 14 quality.',
         aspect:'9:16', duration:'3', mode:'std', sound:false
       },
       {
-        id:'c11', label:'Clip 6 — Showcase Image', model:'gpt', type:'image', outputKey:'c11_img',
-        refs:['girl','blue_bouquet','pink_bouquet','yellow_bouquet'],
-        notes:'👗 Clean simple outfit | 📍 Bedroom, standing | 🎬 Holding blue bouquet, plain faced, looking at camera',
-        prompt:'The girl from the references is standing in her bedroom holding up the blue crochet bouquet at chest height. Plain neutral expression, not smiling, looking at camera. Clean bedroom background, natural daylight. Simple casual outfit. No UI, no grain, no colour grading. iPhone 14 quality.',
+        id:'c11', label:'B-Roll 5 — Crocheting Couch Image', model:'gpt', type:'image', outputKey:'c11_img',
+        refs:['girl','blue_bouquet'],
+        notes:'👗 Cozy crewneck | 📍 Couch by window, backlit | 🎬 Crocheting, main focus',
+        prompt:'The girl from the references is sitting on a couch with a window behind her letting in natural backlight. Cozy crewneck. She is the main focus — face and upper body visible, crocheting a blue flower. Does not know she is being filmed. Candid angle. Freeze frame. No UI, no grain, no colour grading. iPhone 14 quality.',
         aspect:'9:16', resolution:'1K'
       },
       {
-        id:'c12', label:'Clip 6 — Showcase Video', model:'kling', type:'video',
+        id:'c12', label:'B-Roll 5 — Crocheting Couch Video', model:'kling', type:'video',
         refs:['c11_img'],
-        notes:'🎬 Kling — 5s, blue → yellow → pink, plain faced throughout',
+        notes:'🎬 3s, crocheting by window, backlit, stable camera',
+        prompt:'The girl is sitting on a couch by a window crocheting a blue flower. Cozy crewneck. Main focus, face visible. Slow careful movements. Does not know she is being filmed. Fixed stable camera, natural backlight from window. No UI. iPhone 14 quality.',
+        aspect:'9:16', duration:'3', mode:'std', sound:false
+      },
+      {
+        id:'c13', label:'B-Roll 6 — Night Crocheting Image', model:'gpt', type:'image', outputKey:'c13_img',
+        refs:['girl','garage','blue_bouquet'],
+        notes:'👗 Casual late night outfit | 📍 Garage studio late at night, fairy lights | 🎬 Crocheting alone at night, main focus',
+        prompt:'The girl from the references is sitting alone in her garage studio late at night, warm fairy lights in the background. Casual late night outfit. She is the main focus — face and upper body visible, crocheting a blue flower, focused. Does not know she is being filmed. Warm ambient lighting. Candid angle. Freeze frame. No UI, no grain, no colour grading. iPhone 14 quality.',
+        aspect:'9:16', resolution:'1K'
+      },
+      {
+        id:'c14', label:'B-Roll 6 — Night Crocheting Video', model:'kling', type:'video',
+        refs:['c13_img'],
+        notes:'🎬 3s, late night crocheting, warm fairy lights, stable camera',
+        prompt:'The girl is sitting alone in her garage studio late at night crocheting a blue flower. Warm fairy lights in background. Casual outfit. Main focus, face visible. Slow careful movements. Does not know she is being filmed. Fixed stable camera. No UI. iPhone 14 quality.',
+        aspect:'9:16', duration:'3', mode:'std', sound:false
+      },
+      {
+        id:'c15', label:'Product Shot — Bouquet Showcase Image', model:'gpt', type:'image', outputKey:'c15_img',
+        refs:['girl','blue_bouquet','pink_bouquet','yellow_bouquet'],
+        notes:'👗 Clean simple outfit | 📍 Bedroom, standing | 🎬 Holding blue bouquet, plain faced',
+        prompt:'The girl from the references is standing in her bedroom holding up the blue crochet bouquet at chest height. Plain neutral expression, not smiling, looking at camera. Clean bedroom background, natural daylight. Simple casual outfit. She is the main focus. No UI, no grain, no colour grading. iPhone 14 quality.',
+        aspect:'9:16', resolution:'1K'
+      },
+      {
+        id:'c16', label:'Product Shot — Bouquet Showcase Video', model:'kling', type:'video',
+        refs:['c15_img'],
+        notes:'🎬 5s, blue → yellow → pink, plain faced throughout',
         prompt:'The girl is standing in her bedroom holding up the blue crochet bouquet with a plain neutral expression. She slowly lowers it and raises the yellow crochet bouquet, then transitions to the pink crochet bouquet. Plain faced throughout, not smiling, looking at camera. Fixed camera. Natural daylight. No UI. iPhone 14 quality.',
         aspect:'9:16', duration:'5', mode:'std', sound:false
       }
@@ -242,9 +271,9 @@ function buildClip(clip){
   const chains=clip.refs.filter(r=>r.includes('_img')).map(r=>`<div class="chain-row">↳ uses ${r} from previous step</div>`).join('');
   let settingsHtml='';
   if(clip.type==='image'){
-    settingsHtml=`<div class="settings-row"><select class="setting-select" id="res_${clip.id}"><option value="1K" selected>1K</option><option value="2K">2K</option><option value="4K">4K</option></select><select class="setting-select" id="ar_${clip.id}"><option value="9:16" ${clip.aspect==='9:16'?'selected':''}>9:16</option><option value="16:9" ${clip.aspect==='16:9'?'selected':''}>16:9</option><option value="1:1">1:1</option></select></div>`;
+    settingsHtml=`<div class="settings-row"><select class="setting-select" id="res_${clip.id}"><option value="1K" selected>1K</option><option value="2K">2K</option><option value="4K">4K</option></select><select class="setting-select" id="ar_${clip.id}"><option value="9:16" selected>9:16</option><option value="16:9">16:9</option><option value="1:1">1:1</option></select></div>`;
   } else {
-    settingsHtml=`<div class="settings-row"><select class="setting-select" id="dur_${clip.id}"><option value="3" ${clip.duration==='3'?'selected':''}>3s</option><option value="4" ${clip.duration==='4'?'selected':''}>4s</option><option value="5" ${clip.duration==='5'?'selected':''}>5s</option><option value="6" ${clip.duration==='6'?'selected':''}>6s</option></select><select class="setting-select" id="ar_${clip.id}"><option value="9:16" ${clip.aspect==='9:16'?'selected':''}>9:16</option><option value="16:9">16:9</option><option value="1:1">1:1</option></select><select class="setting-select" id="mode_${clip.id}"><option value="std">std</option><option value="pro">pro</option></select><span class="setting-toggle ${clip.sound?'on':''}" id="snd_${clip.id}" onclick="toggleSound('${clip.id}')">🔊 ${clip.sound?'on':'off'}</span></div>`;
+    settingsHtml=`<div class="settings-row"><select class="setting-select" id="dur_${clip.id}"><option value="3" ${clip.duration==='3'?'selected':''}>3s</option><option value="4" ${clip.duration==='4'?'selected':''}>4s</option><option value="5" ${clip.duration==='5'?'selected':''}>5s</option><option value="6" ${clip.duration==='6'?'selected':''}>6s</option></select><select class="setting-select" id="ar_${clip.id}"><option value="9:16" selected>9:16</option><option value="16:9">16:9</option><option value="1:1">1:1</option></select><select class="setting-select" id="mode_${clip.id}"><option value="std">std</option><option value="pro">pro</option></select><span class="setting-toggle ${clip.sound?'on':''}" id="snd_${clip.id}" onclick="toggleSound('${clip.id}')">🔊 ${clip.sound?'on':'off'}</span></div>`;
   }
   div.innerHTML=`<div class="clip-head"><span class="clip-label">${clip.label}</span><span class="mtag ${mc[clip.model]}">${ml[clip.model]}</span></div><div class="clip-notes">${clip.notes}</div><div class="prompt-header"><span class="prompt-label">Prompt</span><button class="edit-btn" onclick="toggleEdit('${clip.id}')">✏️ Edit</button></div><div class="clip-prompt-text" id="pt_${clip.id}">${clip.prompt}</div><textarea class="clip-prompt-edit" id="pe_${clip.id}">${clip.prompt}</textarea>${settingsHtml}${chains}<div class="btn-row"><button class="run-btn ${bc[clip.model]}" id="btn_${clip.id}">${bt}</button></div><div class="rarea" id="ra_${clip.id}"></div>`;
   setTimeout(()=>{document.getElementById('btn_'+clip.id)?.addEventListener('click',()=>runClip(clip));},0);
@@ -256,10 +285,9 @@ window.toggleSound=function(id){const el=document.getElementById('snd_'+id);cons
 function getPrompt(id){const pe=document.getElementById('pe_'+id);const pt=document.getElementById('pt_'+id);return pe?.style.display==='block'?pe.value:pt?.textContent||'';}
 function getSetting(id,type){return document.getElementById(type+'_'+id)?.value||null;}
 function isSoundOn(id){return document.getElementById('snd_'+id)?.classList.contains('on')||false;}
-function getAspectClass(ar){if(ar==='16:9')return 'landscape';if(ar==='1:1')return 'square';return '';}
 function stat(id,msg,type){document.getElementById('ra_'+id).innerHTML=`<div class="smsg ${type}">${msg}</div>`;}
-function showImg(id,url,key,ar){const ac=getAspectClass(ar||'9:16');document.getElementById('ra_'+id).innerHTML=`<div><img class="rimg ${ac}" src="${url}"><div class="result-btns"><button class="pbtn" onclick="saveRef('${key}','${url}',this)">✓ Use as start frame</button><a class="dbtn" href="${url}" target="_blank">⬇ Download</a></div></div>`;if(key)set(key,url);}
-function showVid(id,url,ar){const ac=getAspectClass(ar||'9:16');document.getElementById('ra_'+id).innerHTML=`<div><video class="rvid ${ac}" src="${url}" controls loop></video><div class="result-btns"><a class="dbtn" href="${url}" target="_blank">⬇ Download</a></div></div>`;}
+function showImg(id,url,key){document.getElementById('ra_'+id).innerHTML=`<div><img class="rimg" src="${url}"><div class="result-btns"><button class="pbtn" onclick="saveRef('${key}','${url}',this)">✓ Use as start frame</button><a class="dbtn" href="${url}" target="_blank">⬇ Download</a></div></div>`;if(key)set(key,url);}
+function showVid(id,url){document.getElementById('ra_'+id).innerHTML=`<div><video class="rvid" src="${url}" controls loop></video><div class="result-btns"><a class="dbtn" href="${url}" target="_blank">⬇ Download</a></div></div>`;}
 window.saveRef=(k,url,btn)=>{set(k,url);btn.textContent='✓ Saved!';};
 function getRefs(clip){return clip.refs.map(r=>get(r)).filter(Boolean);}
 
@@ -290,27 +318,27 @@ async function runClip(clip){
   btn.disabled=false;
 }
 async function runGPT(clip,refs,prompt,ar){
-  stat(clip.id,'⏳ Creating image task…','sl');
+  stat(clip.id,'⏳ Creating image…','sl');
   const res=getSetting(clip.id,'res')||'1K';
   const data=await proxyCall('generate_image_gpt',{prompt,aspect_ratio:ar,resolution:res,...(refs.length?{input_urls:refs.slice(0,16)}:{})});
   const taskId=data?.data?.taskId;
   if(!taskId)throw new Error('No task ID: '+JSON.stringify(data));
-  stat(clip.id,'⏳ Waiting for image (~30s)…','sl');
+  stat(clip.id,'⏳ Waiting (~30s)…','sl');
   const url=await pollTask(taskId);
-  if(url)showImg(clip.id,url,clip.outputKey,ar);
+  if(url)showImg(clip.id,url,clip.outputKey);
   else throw new Error('No image URL');
 }
 async function runKling(clip,refs,prompt,ar){
-  stat(clip.id,'⏳ Creating video task…','sl');
+  stat(clip.id,'⏳ Creating video…','sl');
   const dur=getSetting(clip.id,'dur')||'4';
   const mode=getSetting(clip.id,'mode')||'std';
   const sound=isSoundOn(clip.id);
   const data=await proxyCall('generate_video_kling',{prompt,duration:dur,aspect_ratio:ar,mode,sound,multi_shots:true,multi_prompt:[{duration:parseInt(dur),prompt}],...(refs[0]?{image_urls:[refs[0]]}:{})});
   const taskId=data?.data?.taskId;
   if(!taskId)throw new Error('No task ID: '+JSON.stringify(data));
-  stat(clip.id,'⏳ Waiting for video (~2min)…','sl');
+  stat(clip.id,'⏳ Waiting (~2min)…','sl');
   const url=await pollTask(taskId,60);
-  if(url)showVid(clip.id,url,ar);
+  if(url)showVid(clip.id,url);
   else throw new Error('No video URL');
 }
 
