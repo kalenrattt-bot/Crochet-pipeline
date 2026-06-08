@@ -138,10 +138,17 @@ const VIDEOS = [
         aspect:'9:16', resolution:'1K'
       },
       {
+        id:'c1b', label:'Clip 1b — Expo Reveal END Frame Image', model:'gpt', type:'image', outputKey:'c1b_img',
+        refs:['girl','stall','blue_bouquet'],
+        notes:'👗 Same outfit as Clip 1 | 📍 Same expo scene but cloth is OFF, bouquet revealed on table | 👥 People around laughing | 🎬 This is the END frame for Seedance',
+        prompt:'The girl from the reference images is standing at her expo table, same scene as before but now the cloth has been lifted off and the blue crochet flower bouquets are fully revealed on the table — exactly like the reference bouquet, wrapped in blue and cream paper with ribbon. People around her are laughing. She stands with a disappointed blank expression. Bystander POV, candid. Natural daylight. Freeze frame from a video. No UI, no grain, no colour grading. iPhone 14 quality.',
+        aspect:'9:16', resolution:'1K'
+      },
+      {
         id:'c2', label:'Clip 1 — Expo Reveal Hook Video', model:'seedance', type:'video',
-        refs:['c1_img','girl','blue_bouquet','stall'],
-        notes:'🎬 Seedance 2.0 — she counts 3-2-1, lifts cloth, people laugh, she stands disappointed',
-        prompt:'The girl counts down 3 2 1 and lifts the cloth off her table to reveal her blue crochet flower bouquets — wrapped in blue and cream paper with ribbon, exactly like the reference. The people around her start laughing. She stands there with a disappointed blank expression. Candid bystander POV. Camera mostly still. Natural daylight. No UI. iPhone 14 quality.',
+        refs:['c1_img','c1b_img'],
+        notes:'🎬 Seedance 2.0 — first frame = cloth on, last frame = bouquet revealed, people laughing. Seedance fills in the reveal!',
+        prompt:'The girl counts down 3 2 1 and lifts the cloth off her table to reveal her blue crochet flower bouquets. The people around her start laughing. She stands there with a disappointed blank expression. Candid bystander POV. Camera mostly still. Natural daylight. No UI. iPhone 14 quality.',
         aspect:'9:16', duration:'5', sound:true
       },
       {
@@ -417,7 +424,7 @@ async function runSeedance(clip,refs,prompt,ar){
   stat(clip.id,'⏳ Creating video task…','sl');
   const dur=parseInt(getSetting(clip.id,'dur')||'5');
   const sound=isSoundOn(clip.id);
-  const data=await proxyCall('generate_video_seedance',{prompt,duration:dur,aspect_ratio:ar,resolution:'720p',generate_audio:sound,...(refs[0]?{first_frame_url:refs[0]}:{}),...(refs.length>1?{reference_image_urls:refs.slice(1,4)}:{})});
+  const data=await proxyCall('generate_video_seedance',{prompt,duration:dur,aspect_ratio:ar,resolution:'720p',generate_audio:sound,...(refs[0]?{first_frame_url:refs[0]}:{}),...(refs[1]?{last_frame_url:refs[1]}:{})});
   const taskId=data?.data?.taskId;
   if(!taskId) throw new Error('No task ID: '+JSON.stringify(data));
   stat(clip.id,'⏳ Waiting for video (~2min)…','sl');
