@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Crochet Pipeline v4</title>
+<title>Crochet Pipeline v5</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
@@ -12,7 +12,6 @@
   --text:#e8e8e8;--muted:#555;
   --gpt:#f59e0b;--gpt-bg:#1c1200;--gpt-border:#2e1f00;
   --kling:#a78bfa;--kling-bg:#130d2b;--kling-border:#231545;
-  --seed:#38bdf8;--seed-bg:#071825;--seed-border:#0e2d42;
   --accent:#f97316;
 }
 body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:20px 16px}
@@ -48,7 +47,6 @@ input[type=file]{display:none}
 .mtag{font-size:9px;padding:2px 7px;border-radius:4px;font-weight:700;font-family:'DM Mono',monospace}
 .tgpt{background:var(--gpt-bg);color:var(--gpt);border:1px solid var(--gpt-border)}
 .tkling{background:var(--kling-bg);color:var(--kling);border:1px solid var(--kling-border)}
-.tseed{background:var(--seed-bg);color:var(--seed);border:1px solid var(--seed-border)}
 .clip-notes{font-size:10px;color:#3a3a3a;background:#0a0a0a;border:1px solid var(--border);border-radius:5px;padding:5px 9px;margin-bottom:7px;font-family:'DM Mono',monospace;line-height:1.5}
 .prompt-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:3px}
 .prompt-label{font-size:9px;color:var(--muted);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.08em}
@@ -59,24 +57,20 @@ input[type=file]{display:none}
 .settings-row{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;align-items:center}
 .setting-select{font-size:10px;padding:3px 7px;border:1px solid var(--border2);border-radius:4px;background:var(--surface);color:#aaa;font-family:'DM Mono',monospace;outline:none;cursor:pointer}
 .setting-toggle{font-size:10px;padding:3px 9px;border:1px solid var(--border2);border-radius:4px;background:var(--surface);color:#aaa;font-family:'DM Mono',monospace;cursor:pointer;user-select:none}
-.setting-toggle.on{background:var(--seed-bg);color:var(--seed);border-color:var(--seed-border)}
+.setting-toggle.on{background:#071825;color:#38bdf8;border-color:#0e2d42}
 .chain-row{font-size:10px;color:#252525;font-style:italic;margin-bottom:7px;font-family:'DM Mono',monospace}
 .btn-row{display:flex;gap:6px}
 .run-btn{flex:1;padding:7px;border:none;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;transition:all .15s;font-family:'Syne',sans-serif}
 .run-btn:disabled{opacity:.35;cursor:not-allowed}
 .run-btn.rg{background:var(--gpt-bg);color:var(--gpt);border:1px solid var(--gpt-border)}.run-btn.rg:hover:not(:disabled){background:#261a00}
 .run-btn.rk{background:var(--kling-bg);color:var(--kling);border:1px solid var(--kling-border)}.run-btn.rk:hover:not(:disabled){background:#1c1040}
-.run-btn.rk{background:var(--seed-bg);color:var(--seed);border:1px solid var(--seed-border)}.run-btn.rk:hover:not(:disabled){background:#0d2236}
 .rarea{margin-top:7px}
 .smsg{font-size:11px;padding:8px;text-align:center;background:#0a0a0a;border:1px solid var(--border);border-radius:5px;font-family:'DM Mono',monospace}
 .sl{color:var(--kling)}.se{color:#f87171}.ss{color:var(--gpt)}
-.result-wrap{}
 .rimg{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:6px;display:block;border:1px solid var(--border);margin-bottom:5px}
-.rimg.landscape{aspect-ratio:16/9}
-.rimg.square{aspect-ratio:1/1}
+.rimg.landscape{aspect-ratio:16/9}.rimg.square{aspect-ratio:1/1}
 .rvid{width:100%;aspect-ratio:9/16;border-radius:6px;display:block;border:1px solid var(--border);margin-bottom:5px}
-.rvid.landscape{aspect-ratio:16/9}
-.rvid.square{aspect-ratio:1/1}
+.rvid.landscape{aspect-ratio:16/9}.rvid.square{aspect-ratio:1/1}
 .result-btns{display:flex;gap:5px}
 .pbtn{flex:1;padding:5px;border:1px solid var(--gpt-border);border-radius:5px;background:transparent;color:var(--gpt);font-size:10px;cursor:pointer;font-family:'DM Mono',monospace}
 .pbtn:hover{background:var(--gpt-bg)}
@@ -86,8 +80,8 @@ input[type=file]{display:none}
 </head>
 <body>
 <div class="header">
-  <h1>🌸 Crochet <span>Pipeline</span> v4</h1>
-  <p>gpt image 2 → kling 3.0 (all videos) + kling 3.0 (b-roll) // american pie</p>
+  <h1>🌸 Crochet <span>Pipeline</span> v5</h1>
+  <p>gpt image 2 → kling 3.0 // reveal hook + progression + showcase</p>
 </div>
 
 <div class="global-refs">
@@ -107,23 +101,15 @@ const STORE = {
   blue_bouquet: 'https://i.ibb.co/QvyqVxPj/Blue.jpg',
   pink_bouquet: 'https://i.ibb.co/0RSL2JZ5/Pink.jpg',
   yellow_bouquet: 'https://i.ibb.co/k6g4MLJk/Yellow.jpg',
-  extra1: '',
-  extra2: '',
-  extra3: ''
+  extra1: '', extra2: '', extra3: ''
 };
 const get = k => STORE[k]||null;
 const set = (k,v) => { STORE[k]=v; };
 
 const GLOBALS = [
-  {key:'girl', label:'Girl ref'},
-  {key:'stall', label:'Stall ref'},
-  {key:'garage', label:'Garage ref'},
-  {key:'blue_bouquet', label:'Blue bouquet'},
-  {key:'pink_bouquet', label:'Pink bouquet'},
-  {key:'yellow_bouquet', label:'Yellow bouquet'},
-  {key:'extra1', label:'Extra ref 1'},
-  {key:'extra2', label:'Extra ref 2'},
-  {key:'extra3', label:'Extra ref 3'},
+  {key:'girl',label:'Girl ref'},{key:'stall',label:'Stall ref'},{key:'garage',label:'Garage ref'},
+  {key:'blue_bouquet',label:'Blue bouquet'},{key:'pink_bouquet',label:'Pink bouquet'},{key:'yellow_bouquet',label:'Yellow bouquet'},
+  {key:'extra1',label:'Extra ref 1'},{key:'extra2',label:'Extra ref 2'},{key:'extra3',label:'Extra ref 3'}
 ];
 
 const VIDEOS = [
@@ -131,51 +117,44 @@ const VIDEOS = [
     id:'v1', title:'Video — Reveal Hook + Progression + Showcase',
     clips:[
       {
-        id:'c1', label:'Clip 1 — Expo Reveal Hook Image', model:'gpt', type:'image', outputKey:'c1_img',
+        id:'c1', label:'Clip 1 — Hook Image (Before Reveal)', model:'gpt', type:'image', outputKey:'c1_img',
         refs:['girl','stall','blue_bouquet'],
-        notes:'👗 Oversized plain crewneck, jeans | 📍 Outdoor expo, centre table with cloth | 👥 People around filming | 🎬 Freeze frame before reveal',
-        prompt:'The girl from the reference images is standing at her own table at a busy outdoor expo. She is wearing an oversized plain crewneck and jeans. Her table has a cloth draped over it hiding bouquets underneath. People around are holding phones filming her. She has her hand on the cloth about to lift it. Bystander POV, candid. Natural daylight. Freeze frame from a video. No UI, no grain, no colour grading. iPhone 14 quality.',
+        notes:'👗 Oversized plain crewneck, jeans | 📍 Outdoor expo, centre table with cloth covering bouquets | 👥 People around filming | 🎬 Freeze frame, hand on cloth about to lift',
+        prompt:'The girl from the reference images is standing at her own table at a busy outdoor expo. Oversized plain crewneck and jeans. Her table has a cloth draped over it hiding the bouquets underneath. People around are holding phones filming her. She has her hand on the cloth about to lift it, counting down. Bystander POV, candid. Natural daylight. Freeze frame. No UI, no grain, no colour grading. iPhone 14 quality.',
         aspect:'9:16', resolution:'1K'
       },
       {
-        id:'c1b', label:'Clip 1b — Expo Reveal END Frame Image', model:'gpt', type:'image', outputKey:'c1b_img',
-        refs:['girl','stall','blue_bouquet'],
-        notes:'👗 Same outfit as Clip 1 | 📍 Same expo scene but cloth is OFF, bouquet revealed on table | 👥 People around laughing | 🎬 This is the END frame for Seedance',
-        prompt:'The girl from the reference images is standing at her expo table, same scene as before but now the cloth has been lifted off and the blue crochet flower bouquets are fully revealed on the table — exactly like the reference bouquet, wrapped in blue and cream paper with ribbon. People around her are laughing. She stands with a disappointed blank expression. Bystander POV, candid. Natural daylight. Freeze frame from a video. No UI, no grain, no colour grading. iPhone 14 quality.',
-        aspect:'9:16', resolution:'1K'
-      },
-      {
-        id:'c2', label:'Clip 1 — Expo Reveal Hook Video', model:'seedance', type:'video',
-        refs:['c1_img','c1b_img'],
-        notes:'🎬 Seedance 2.0 — first frame = cloth on, last frame = bouquet revealed, people laughing. Seedance fills in the reveal!',
-        prompt:'The girl counts down 3 2 1 and lifts the cloth off her table to reveal her blue crochet flower bouquets. The people around her start laughing. She stands there with a disappointed blank expression. Candid bystander POV. Camera mostly still. Natural daylight. No UI. iPhone 14 quality.',
-        aspect:'9:16', duration:'5', sound:true
+        id:'c2', label:'Clip 1 — Hook Video', model:'kling', type:'video',
+        refs:['c1_img'],
+        notes:'🎬 Kling — she counts 3-2-1, lifts cloth to reveal bouquets, people laugh, she stands disappointed',
+        prompt:'The girl counts down 3 2 1 and lifts the cloth off her table to reveal her crochet flower bouquets. The people around her start laughing and snickering. She stands there with a disappointed blank expression watching them laugh. Candid bystander POV. Camera mostly still. Natural daylight. No UI. iPhone 14 quality.',
+        aspect:'9:16', duration:'5', mode:'std', sound:true
       },
       {
         id:'c3', label:'Clip 2 — Crocheting Kitchen Image', model:'gpt', type:'image', outputKey:'c3_img',
         refs:['girl','blue_bouquet'],
-        notes:'👗 Same oversized crewneck | 📍 Kitchen counter, natural daylight | 🎬 Extreme close up, just the very start of a flower',
-        prompt:'Extreme close up of the girl\'s hands at a kitchen counter just starting to crochet the very tip of a small blue flower. Only the beginning stitches visible. Natural daylight. She does not know she is being filmed. No face visible, just hands and the tiny start of a flower. No UI, no grain, no colour grading. iPhone 14 quality.',
+        notes:'👗 Oversized crewneck | 📍 Kitchen counter, natural daylight | 🎬 Extreme close up of hands, just the very tip of a flower starting',
+        prompt:'Extreme close up of the girl\'s hands at a kitchen counter just starting to crochet the very tip of a small blue flower. Only the first few stitches visible. Natural daylight. She does not know she is being filmed. No face needed, just hands and tiny start of flower. No UI, no grain, no colour grading. iPhone 14 quality.',
         aspect:'9:16', resolution:'1K'
       },
       {
         id:'c4', label:'Clip 2 — Crocheting Kitchen Video', model:'kling', type:'video',
         refs:['c3_img'],
-        notes:'🎬 Kling — 3s, just hands, slow movement, stable camera',
+        notes:'🎬 Kling — 3s, just hands crocheting, slow, stable camera',
         prompt:'Close up of the girl\'s hands crocheting the very beginning of a small blue flower at a kitchen counter. Slow careful movements. Does not know she is being filmed. Fixed stable camera. Natural daylight. No UI. iPhone 14 quality.',
         aspect:'9:16', duration:'3', mode:'std', sound:false
       },
       {
         id:'c5', label:'Clip 3 — Crocheting Bedroom Floor Image', model:'gpt', type:'image', outputKey:'c5_img',
         refs:['girl','blue_bouquet'],
-        notes:'👗 Plain casual hoodie, different to clip 1 | 📍 Bedroom floor, sitting cross legged | 🎬 Flower halfway done now',
+        notes:'👗 Plain casual hoodie — different to clip 1 | 📍 Bedroom floor, sitting cross legged | 🎬 Flower halfway done',
         prompt:'The girl from the references is sitting cross legged on a bedroom floor in a plain casual hoodie. She is crocheting a blue flower that is now halfway complete. Does not know she is being filmed. Natural daylight from a window. Candid angle. Freeze frame. No UI, no grain, no colour grading. iPhone 14 quality.',
         aspect:'9:16', resolution:'1K'
       },
       {
         id:'c6', label:'Clip 3 — Crocheting Bedroom Floor Video', model:'kling', type:'video',
         refs:['c5_img'],
-        notes:'🎬 Kling — 3s, halfway flower, stable camera, eyes on work',
+        notes:'🎬 Kling — 3s, halfway done flower, stable camera, eyes on work',
         prompt:'The girl is sitting on the bedroom floor crocheting a halfway complete blue flower. Slow deliberate movements. Does not know she is being filmed. Eyes on her work. Fixed stable camera. Natural daylight. No UI. iPhone 14 quality.',
         aspect:'9:16', duration:'3', mode:'std', sound:false
       },
@@ -183,42 +162,42 @@ const VIDEOS = [
         id:'c7', label:'Clip 4 — Crocheting Couch Image', model:'gpt', type:'image', outputKey:'c7_img',
         refs:['girl','blue_bouquet'],
         notes:'👗 Simple plain t-shirt | 📍 Couch by window, natural backlight | 🎬 Flower almost complete',
-        prompt:'The girl from the references is sitting on a couch with a window behind her. She is wearing a simple plain t-shirt. She is crocheting a blue flower that is almost complete, just a few stitches left. Does not know she is being filmed. Candid angle. Freeze frame. No UI, no grain, no colour grading. iPhone 14 quality.',
+        prompt:'The girl from the references is sitting on a couch with a window behind her. Plain t-shirt. Crocheting a blue flower almost complete. Does not know she is being filmed. Candid angle. Freeze frame. No UI, no grain, no colour grading. iPhone 14 quality.',
         aspect:'9:16', resolution:'1K'
       },
       {
         id:'c8', label:'Clip 4 — Crocheting Couch Video', model:'kling', type:'video',
         refs:['c7_img'],
-        notes:'🎬 Kling — 3s, almost done, stable, backlit window',
+        notes:'🎬 Kling — 3s, almost done, backlit window, stable',
         prompt:'The girl is sitting on a couch by a window crocheting an almost complete blue flower. Slow careful movements, nearly done. Does not know she is being filmed. Fixed stable camera, natural backlight from window. No UI. iPhone 14 quality.',
         aspect:'9:16', duration:'3', mode:'std', sound:false
       },
       {
-        id:'c9', label:'Clip 5 — Finishing Touches Kitchen Image', model:'gpt', type:'image', outputKey:'c9_img',
+        id:'c9', label:'Clip 5 — Finishing Touches Image', model:'gpt', type:'image', outputKey:'c9_img',
         refs:['girl','blue_bouquet'],
-        notes:'👗 Plain crewneck or apron | 📍 Kitchen standing, minimal background | 🎬 Very last stitches',
-        prompt:'The girl from the references is standing in her kitchen doing the very last finishing stitches on a completed blue crochet flower. Plain crewneck. Minimal kitchen background. Focused, almost done. Does not know she is being filmed. Freeze frame. Natural daylight. No UI, no grain, no colour grading. iPhone 14 quality.',
+        notes:'👗 Plain crewneck | 📍 Kitchen standing, minimal background | 🎬 Very last stitches on completed flower',
+        prompt:'The girl from the references is standing in her kitchen doing the very last finishing stitches on a completed blue crochet flower. Plain crewneck. Minimal kitchen background. Focused. Does not know she is being filmed. Freeze frame. Natural daylight. No UI, no grain, no colour grading. iPhone 14 quality.',
         aspect:'9:16', resolution:'1K'
       },
       {
-        id:'c10', label:'Clip 5 — Finishing Touches Kitchen Video', model:'kling', type:'video',
+        id:'c10', label:'Clip 5 — Finishing Touches Video', model:'kling', type:'video',
         refs:['c9_img'],
         notes:'🎬 Kling — 3s, very last stitches, satisfying',
         prompt:'The girl is standing in her kitchen doing the very last few stitches on a completed blue crochet flower. Slow and careful, almost done. Does not know she is being filmed. Fixed stable camera. Natural daylight. No UI. iPhone 14 quality.',
         aspect:'9:16', duration:'3', mode:'std', sound:false
       },
       {
-        id:'c11', label:'Clip 6 — Bouquet Showcase Image', model:'gpt', type:'image', outputKey:'c11_img',
+        id:'c11', label:'Clip 6 — Showcase Image', model:'gpt', type:'image', outputKey:'c11_img',
         refs:['girl','blue_bouquet','pink_bouquet','yellow_bouquet'],
-        notes:'👗 Clean simple casual outfit | 📍 Bedroom, standing | 🎬 Holding up blue bouquet, plain faced',
-        prompt:'The girl from the references is standing in her bedroom holding up the blue crochet bouquet at chest height. Plain neutral expression, not smiling, looking at camera. Clean bedroom background, natural daylight. Simple casual outfit. Shot like someone filming her. No UI, no grain, no colour grading. iPhone 14 quality.',
+        notes:'👗 Clean simple outfit | 📍 Bedroom, standing | 🎬 Holding blue bouquet, plain faced, looking at camera',
+        prompt:'The girl from the references is standing in her bedroom holding up the blue crochet bouquet at chest height. Plain neutral expression, not smiling, looking at camera. Clean bedroom background, natural daylight. Simple casual outfit. No UI, no grain, no colour grading. iPhone 14 quality.',
         aspect:'9:16', resolution:'1K'
       },
       {
-        id:'c12', label:'Clip 6 — Bouquet Showcase Video', model:'kling', type:'video',
+        id:'c12', label:'Clip 6 — Showcase Video', model:'kling', type:'video',
         refs:['c11_img'],
-        notes:'🎬 Kling — 5s, blue → yellow → pink bouquet transition, plain faced throughout',
-        prompt:'The girl is standing in her bedroom holding up the blue crochet bouquet with a plain neutral expression. She slowly lowers it and raises the yellow crochet bouquet, then smoothly transitions to holding up the pink crochet bouquet. Plain faced throughout, not smiling, looking at camera. Fixed camera. Natural daylight. No UI. iPhone 14 quality.',
+        notes:'🎬 Kling — 5s, blue → yellow → pink, plain faced throughout',
+        prompt:'The girl is standing in her bedroom holding up the blue crochet bouquet with a plain neutral expression. She slowly lowers it and raises the yellow crochet bouquet, then transitions to the pink crochet bouquet. Plain faced throughout, not smiling, looking at camera. Fixed camera. Natural daylight. No UI. iPhone 14 quality.',
         aspect:'9:16', duration:'5', mode:'std', sound:false
       }
     ]
@@ -231,26 +210,11 @@ function renderGlobals(){
   const grid=document.getElementById('grefgrid');
   GLOBALS.forEach(g=>{
     const d=document.createElement('div');
-    d.innerHTML=`
-      <label class="ref-label">${g.label}</label>
-      <div class="ref-upload">
-        <div class="ref-upload-row">
-          <label class="ubtn" for="gf_${g.key}">📎</label>
-          <input type="file" id="gf_${g.key}" accept="image/*">
-          <img class="iprev" id="gp_${g.key}" src="${get(g.key)||''}" style="${get(g.key)?'display:block':''}">
-        </div>
-        <input type="text" class="iurl" id="gu_${g.key}" placeholder="paste URL" value="${get(g.key)||''}">
-      </div>`;
+    d.innerHTML=`<label class="ref-label">${g.label}</label><div class="ref-upload"><div class="ref-upload-row"><label class="ubtn" for="gf_${g.key}">📎</label><input type="file" id="gf_${g.key}" accept="image/*"><img class="iprev" id="gp_${g.key}" src="${get(g.key)||''}" style="${get(g.key)?'display:block':''}"></div><input type="text" class="iurl" id="gu_${g.key}" placeholder="paste URL" value="${get(g.key)||''}"></div>`;
     grid.appendChild(d);
     setTimeout(()=>{
-      document.getElementById('gf_'+g.key).addEventListener('change',async e=>{
-        const f=e.target.files[0];if(!f)return;
-        const b=await toB64(f);set(g.key,b);
-        const p=document.getElementById('gp_'+g.key);p.src=b;p.style.display='block';
-      });
-      document.getElementById('gu_'+g.key).addEventListener('blur',e=>{
-        const v=e.target.value.trim();if(v){set(g.key,v);const p=document.getElementById('gp_'+g.key);p.src=v;p.style.display='block';}
-      });
+      document.getElementById('gf_'+g.key).addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;const b=await toB64(f);set(g.key,b);const p=document.getElementById('gp_'+g.key);p.src=b;p.style.display='block';});
+      document.getElementById('gu_'+g.key).addEventListener('blur',e=>{const v=e.target.value.trim();if(v){set(g.key,v);const p=document.getElementById('gp_'+g.key);p.src=v;p.style.display='block';}});
     },0);
   });
 }
@@ -264,114 +228,44 @@ function renderPipeline(){
     const body=document.createElement('div');body.className='vbody o';body.id='vb_'+vid.id;
     const clips=document.createElement('div');clips.className='clips';
     vid.clips.forEach(c=>clips.appendChild(buildClip(c)));
-    body.appendChild(clips);card.appendChild(head);card.appendChild(body);
-    cont.appendChild(card);
-    head.addEventListener('click',()=>{
-      body.classList.toggle('o');
-      document.getElementById('ch_'+vid.id).classList.toggle('o',body.classList.contains('o'));
-    });
+    body.appendChild(clips);card.appendChild(head);card.appendChild(body);cont.appendChild(card);
+    head.addEventListener('click',()=>{body.classList.toggle('o');document.getElementById('ch_'+vid.id).classList.toggle('o',body.classList.contains('o'));});
   });
 }
 
 function buildClip(clip){
   const div=document.createElement('div');div.className='clip';
-  const mc={gpt:'tgpt',kling:'tkling',seedance:'tseed'};
-  const ml={gpt:'GPT Image 2',kling:'Kling 3.0',seedance:'Seedance 2.0'};
-  const bc={gpt:'rg',kling:'rk',seedance:'rs'};
+  const mc={gpt:'tgpt',kling:'tkling'};
+  const ml={gpt:'GPT Image 2',kling:'Kling 3.0'};
+  const bc={gpt:'rg',kling:'rk'};
   const bt=clip.type==='image'?'🖼 Generate Image':'🎬 Generate Video';
   const chains=clip.refs.filter(r=>r.includes('_img')).map(r=>`<div class="chain-row">↳ uses ${r} from previous step</div>`).join('');
   let settingsHtml='';
   if(clip.type==='image'){
-    settingsHtml=`<div class="settings-row">
-      <select class="setting-select" id="res_${clip.id}">
-        <option value="1K" ${clip.resolution==='1K'?'selected':''}>1K</option>
-        <option value="2K" ${clip.resolution==='2K'?'selected':''}>2K</option>
-        <option value="4K" ${clip.resolution==='4K'?'selected':''}>4K</option>
-      </select>
-      <select class="setting-select" id="ar_${clip.id}">
-        <option value="9:16" ${clip.aspect==='9:16'?'selected':''}>9:16</option>
-        <option value="16:9" ${clip.aspect==='16:9'?'selected':''}>16:9</option>
-        <option value="1:1">1:1</option>
-      </select>
-    </div>`;
-  } else if(clip.model==='seedance'){
-    settingsHtml=`<div class="settings-row">
-      <select class="setting-select" id="dur_${clip.id}">
-        <option value="4" ${clip.duration==='4'?'selected':''}>4s</option>
-        <option value="5" ${clip.duration==='5'?'selected':''}>5s</option>
-        <option value="6" ${clip.duration==='6'?'selected':''}>6s</option>
-      </select>
-      <select class="setting-select" id="ar_${clip.id}">
-        <option value="9:16" ${clip.aspect==='9:16'?'selected':''}>9:16</option>
-        <option value="16:9" ${clip.aspect==='16:9'?'selected':''}>16:9</option>
-      </select>
-      <span class="setting-toggle ${clip.sound?'on':''}" id="snd_${clip.id}" onclick="toggleSound('${clip.id}')">🔊 ${clip.sound?'on':'off'}</span>
-    </div>`;
+    settingsHtml=`<div class="settings-row"><select class="setting-select" id="res_${clip.id}"><option value="1K" selected>1K</option><option value="2K">2K</option><option value="4K">4K</option></select><select class="setting-select" id="ar_${clip.id}"><option value="9:16" ${clip.aspect==='9:16'?'selected':''}>9:16</option><option value="16:9" ${clip.aspect==='16:9'?'selected':''}>16:9</option><option value="1:1">1:1</option></select></div>`;
   } else {
-    settingsHtml=`<div class="settings-row">
-      <select class="setting-select" id="dur_${clip.id}">
-        <option value="3" ${clip.duration==='3'?'selected':''}>3s</option>
-        <option value="4" ${clip.duration==='4'?'selected':''}>4s</option>
-        <option value="5" ${clip.duration==='5'?'selected':''}>5s</option>
-      </select>
-      <select class="setting-select" id="ar_${clip.id}">
-        <option value="9:16" ${clip.aspect==='9:16'?'selected':''}>9:16</option>
-        <option value="16:9" ${clip.aspect==='16:9'?'selected':''}>16:9</option>
-      </select>
-      <select class="setting-select" id="mode_${clip.id}">
-        <option value="std">std</option>
-        <option value="pro">pro</option>
-      </select>
-      <span class="setting-toggle ${clip.sound?'on':''}" id="snd_${clip.id}" onclick="toggleSound('${clip.id}')">🔊 ${clip.sound?'on':'off'}</span>
-    </div>`;
+    settingsHtml=`<div class="settings-row"><select class="setting-select" id="dur_${clip.id}"><option value="3" ${clip.duration==='3'?'selected':''}>3s</option><option value="4" ${clip.duration==='4'?'selected':''}>4s</option><option value="5" ${clip.duration==='5'?'selected':''}>5s</option><option value="6" ${clip.duration==='6'?'selected':''}>6s</option></select><select class="setting-select" id="ar_${clip.id}"><option value="9:16" ${clip.aspect==='9:16'?'selected':''}>9:16</option><option value="16:9">16:9</option><option value="1:1">1:1</option></select><select class="setting-select" id="mode_${clip.id}"><option value="std">std</option><option value="pro">pro</option></select><span class="setting-toggle ${clip.sound?'on':''}" id="snd_${clip.id}" onclick="toggleSound('${clip.id}')">🔊 ${clip.sound?'on':'off'}</span></div>`;
   }
-
-  div.innerHTML=`
-    <div class="clip-head"><span class="clip-label">${clip.label}</span><span class="mtag ${mc[clip.model]}">${ml[clip.model]}</span></div>
-    <div class="clip-notes">${clip.notes}</div>
-    <div class="prompt-header"><span class="prompt-label">Prompt</span><button class="edit-btn" onclick="toggleEdit('${clip.id}')">✏️ Edit</button></div>
-    <div class="clip-prompt-text" id="pt_${clip.id}">${clip.prompt}</div>
-    <textarea class="clip-prompt-edit" id="pe_${clip.id}">${clip.prompt}</textarea>
-    ${settingsHtml}
-    ${chains}
-    <div class="btn-row">
-      <button class="run-btn ${bc[clip.model]}" id="btn_${clip.id}">${bt}</button>
-    </div>
-    <div class="rarea" id="ra_${clip.id}"></div>`;
+  div.innerHTML=`<div class="clip-head"><span class="clip-label">${clip.label}</span><span class="mtag ${mc[clip.model]}">${ml[clip.model]}</span></div><div class="clip-notes">${clip.notes}</div><div class="prompt-header"><span class="prompt-label">Prompt</span><button class="edit-btn" onclick="toggleEdit('${clip.id}')">✏️ Edit</button></div><div class="clip-prompt-text" id="pt_${clip.id}">${clip.prompt}</div><textarea class="clip-prompt-edit" id="pe_${clip.id}">${clip.prompt}</textarea>${settingsHtml}${chains}<div class="btn-row"><button class="run-btn ${bc[clip.model]}" id="btn_${clip.id}">${bt}</button></div><div class="rarea" id="ra_${clip.id}"></div>`;
   setTimeout(()=>{document.getElementById('btn_'+clip.id)?.addEventListener('click',()=>runClip(clip));},0);
   return div;
 }
 
-window.toggleEdit=function(id){
-  const pt=document.getElementById('pt_'+id);const pe=document.getElementById('pe_'+id);
-  if(pe.style.display==='block'){pt.textContent=pe.value;pt.style.display='block';pe.style.display='none';}
-  else{pe.style.display='block';pt.style.display='none';pe.focus();}
-};
-window.toggleSound=function(id){
-  const el=document.getElementById('snd_'+id);const on=el.classList.toggle('on');
-  el.textContent='🔊 '+(on?'on':'off');
-};
+window.toggleEdit=function(id){const pt=document.getElementById('pt_'+id);const pe=document.getElementById('pe_'+id);if(pe.style.display==='block'){pt.textContent=pe.value;pt.style.display='block';pe.style.display='none';}else{pe.style.display='block';pt.style.display='none';pe.focus();}};
+window.toggleSound=function(id){const el=document.getElementById('snd_'+id);const on=el.classList.toggle('on');el.textContent='🔊 '+(on?'on':'off');};
 function getPrompt(id){const pe=document.getElementById('pe_'+id);const pt=document.getElementById('pt_'+id);return pe?.style.display==='block'?pe.value:pt?.textContent||'';}
 function getSetting(id,type){return document.getElementById(type+'_'+id)?.value||null;}
 function isSoundOn(id){return document.getElementById('snd_'+id)?.classList.contains('on')||false;}
-function getAspectClass(ar){if(ar==='16:9') return 'landscape';if(ar==='1:1') return 'square';return '';}
+function getAspectClass(ar){if(ar==='16:9')return 'landscape';if(ar==='1:1')return 'square';return '';}
 function stat(id,msg,type){document.getElementById('ra_'+id).innerHTML=`<div class="smsg ${type}">${msg}</div>`;}
-
-function showImg(id,url,key,ar){
-  const ac=getAspectClass(ar||'9:16');
-  document.getElementById('ra_'+id).innerHTML=`<div class="result-wrap"><img class="rimg ${ac}" src="${url}"><div class="result-btns"><button class="pbtn" onclick="saveRef('${key}','${url}',this)">✓ Use as start frame</button><a class="dbtn" href="${url}" target="_blank">⬇ Download</a></div></div>`;
-  if(key) set(key,url);
-}
-function showVid(id,url,ar){
-  const ac=getAspectClass(ar||'9:16');
-  document.getElementById('ra_'+id).innerHTML=`<div class="result-wrap"><video class="rvid ${ac}" src="${url}" controls loop></video><div class="result-btns"><a class="dbtn" href="${url}" target="_blank">⬇ Download</a></div></div>`;
-}
+function showImg(id,url,key,ar){const ac=getAspectClass(ar||'9:16');document.getElementById('ra_'+id).innerHTML=`<div><img class="rimg ${ac}" src="${url}"><div class="result-btns"><button class="pbtn" onclick="saveRef('${key}','${url}',this)">✓ Use as start frame</button><a class="dbtn" href="${url}" target="_blank">⬇ Download</a></div></div>`;if(key)set(key,url);}
+function showVid(id,url,ar){const ac=getAspectClass(ar||'9:16');document.getElementById('ra_'+id).innerHTML=`<div><video class="rvid ${ac}" src="${url}" controls loop></video><div class="result-btns"><a class="dbtn" href="${url}" target="_blank">⬇ Download</a></div></div>`;}
 window.saveRef=(k,url,btn)=>{set(k,url);btn.textContent='✓ Saved!';};
 function getRefs(clip){return clip.refs.map(r=>get(r)).filter(Boolean);}
 
 async function proxyCall(action,payload){
   const res=await fetch(PROXY,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,payload})});
-  if(!res.ok) throw new Error('Worker error '+res.status);
+  if(!res.ok)throw new Error('Worker error '+res.status);
   return res.json();
 }
 async function pollTask(taskId,maxAttempts=60){
@@ -380,7 +274,7 @@ async function pollTask(taskId,maxAttempts=60){
     const data=await proxyCall('get_task',{taskId});
     const state=data?.data?.state;
     if(state==='success'){const result=JSON.parse(data.data.resultJson||'{}');return result.resultUrls?.[0]||null;}
-    if(state==='fail') throw new Error('Failed: '+data?.data?.failMsg);
+    if(state==='fail')throw new Error('Failed: '+data?.data?.failMsg);
   }
   throw new Error('Timed out');
 }
@@ -390,9 +284,8 @@ async function runClip(clip){
   try{
     const refs=getRefs(clip);const prompt=getPrompt(clip.id);
     const ar=getSetting(clip.id,'ar')||clip.aspect||'9:16';
-    if(clip.model==='gpt') await runGPT(clip,refs,prompt,ar);
-    else if(clip.model==='kling') await runKling(clip,refs,prompt,ar);
-    else await runSeedance(clip,refs,prompt,ar);
+    if(clip.model==='gpt')await runGPT(clip,refs,prompt,ar);
+    else await runKling(clip,refs,prompt,ar);
   }catch(e){stat(clip.id,'❌ '+e.message,'se');console.error(e);}
   btn.disabled=false;
 }
@@ -401,10 +294,10 @@ async function runGPT(clip,refs,prompt,ar){
   const res=getSetting(clip.id,'res')||'1K';
   const data=await proxyCall('generate_image_gpt',{prompt,aspect_ratio:ar,resolution:res,...(refs.length?{input_urls:refs.slice(0,16)}:{})});
   const taskId=data?.data?.taskId;
-  if(!taskId) throw new Error('No task ID: '+JSON.stringify(data));
+  if(!taskId)throw new Error('No task ID: '+JSON.stringify(data));
   stat(clip.id,'⏳ Waiting for image (~30s)…','sl');
   const url=await pollTask(taskId);
-  if(url) showImg(clip.id,url,clip.outputKey,ar);
+  if(url)showImg(clip.id,url,clip.outputKey,ar);
   else throw new Error('No image URL');
 }
 async function runKling(clip,refs,prompt,ar){
@@ -414,22 +307,10 @@ async function runKling(clip,refs,prompt,ar){
   const sound=isSoundOn(clip.id);
   const data=await proxyCall('generate_video_kling',{prompt,duration:dur,aspect_ratio:ar,mode,sound,multi_shots:true,multi_prompt:[{duration:parseInt(dur),prompt}],...(refs[0]?{image_urls:[refs[0]]}:{})});
   const taskId=data?.data?.taskId;
-  if(!taskId) throw new Error('No task ID: '+JSON.stringify(data));
+  if(!taskId)throw new Error('No task ID: '+JSON.stringify(data));
   stat(clip.id,'⏳ Waiting for video (~2min)…','sl');
   const url=await pollTask(taskId,60);
-  if(url) showVid(clip.id,url,ar);
-  else throw new Error('No video URL');
-}
-async function runSeedance(clip,refs,prompt,ar){
-  stat(clip.id,'⏳ Creating video task…','sl');
-  const dur=parseInt(getSetting(clip.id,'dur')||'5');
-  const sound=isSoundOn(clip.id);
-  const data=await proxyCall('generate_video_seedance',{prompt,duration:dur,aspect_ratio:ar,resolution:'720p',generate_audio:sound,...(refs[0]?{first_frame_url:refs[0]}:{}),...(refs[1]?{last_frame_url:refs[1]}:{})});
-  const taskId=data?.data?.taskId;
-  if(!taskId) throw new Error('No task ID: '+JSON.stringify(data));
-  stat(clip.id,'⏳ Waiting for video (~2min)…','sl');
-  const url=await pollTask(taskId,60);
-  if(url) showVid(clip.id,url,ar);
+  if(url)showVid(clip.id,url,ar);
   else throw new Error('No video URL');
 }
 
