@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Crochet Pipeline v7</title>
+<title>Crochet Hooks Pipeline</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
@@ -53,33 +53,35 @@ input[type=file]{display:none}
 .edit-btn{font-size:9px;padding:2px 7px;border:1px solid var(--border2);border-radius:4px;background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Mono',monospace}
 .edit-btn:hover{color:var(--text);border-color:#444}
 .clip-prompt-text{font-size:11px;color:#555;line-height:1.5;background:#0a0a0a;border:1px solid var(--border);border-radius:5px;padding:7px 9px;font-family:'DM Mono',monospace;margin-bottom:7px}
-.clip-prompt-edit{width:100%;font-size:11px;color:#ccc;line-height:1.5;background:#0a0a0a;border:1px solid var(--kling-border);border-radius:5px;padding:7px 9px;font-family:'DM Mono',monospace;margin-bottom:7px;resize:vertical;min-height:70px;outline:none;display:none}
+.clip-prompt-edit{width:100%;font-size:11px;color:#ccc;line-height:1.5;background:#0a0a0a;border:1px solid var(--kling-border);border-radius:5px;padding:7px 9px;font-family:'DM Mono',monospace;margin-bottom:7px;resize:vertical;min-height:80px;outline:none;display:none}
 .settings-row{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;align-items:center}
 .setting-select{font-size:10px;padding:3px 7px;border:1px solid var(--border2);border-radius:4px;background:var(--surface);color:#aaa;font-family:'DM Mono',monospace;outline:none;cursor:pointer}
 .setting-toggle{font-size:10px;padding:3px 9px;border:1px solid var(--border2);border-radius:4px;background:var(--surface);color:#aaa;font-family:'DM Mono',monospace;cursor:pointer;user-select:none}
 .setting-toggle.on{background:#071825;color:#38bdf8;border-color:#0e2d42}
 .chain-row{font-size:10px;color:#252525;font-style:italic;margin-bottom:7px;font-family:'DM Mono',monospace}
 .btn-row{display:flex;gap:6px}
-.run-btn{flex:1;padding:7px;border:none;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;transition:all .15s;font-family:'Syne',sans-serif}
+.run-btn{flex:1;padding:8px;border:none;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;transition:all .15s;font-family:'Syne',sans-serif}
 .run-btn:disabled{opacity:.35;cursor:not-allowed}
+.run-btn.rfull{background:var(--accent);color:#fff;border:none}
+.run-btn.rfull:hover:not(:disabled){background:#ea670c}
 .run-btn.rg{background:var(--gpt-bg);color:var(--gpt);border:1px solid var(--gpt-border)}.run-btn.rg:hover:not(:disabled){background:#261a00}
 .run-btn.rk{background:var(--kling-bg);color:var(--kling);border:1px solid var(--kling-border)}.run-btn.rk:hover:not(:disabled){background:#1c1040}
 .rarea{margin-top:7px}
 .smsg{font-size:11px;padding:8px;text-align:center;background:#0a0a0a;border:1px solid var(--border);border-radius:5px;font-family:'DM Mono',monospace}
 .sl{color:var(--kling)}.se{color:#f87171}.ss{color:var(--gpt)}
-.rimg{width:100%;max-height:280px;object-fit:cover;border-radius:6px;display:block;border:1px solid var(--border);margin-bottom:5px}
-.rvid{width:100%;max-height:280px;border-radius:6px;display:block;border:1px solid var(--border);margin-bottom:5px}
+.rimg{width:100%;max-height:300px;object-fit:cover;border-radius:6px;display:block;border:1px solid var(--border);margin-bottom:5px}
+.rvid{width:100%;max-height:340px;border-radius:6px;display:block;border:1px solid var(--border);margin-bottom:5px}
 .result-btns{display:flex;gap:5px}
-.pbtn{flex:1;padding:5px;border:1px solid var(--gpt-border);border-radius:5px;background:transparent;color:var(--gpt);font-size:10px;cursor:pointer;font-family:'DM Mono',monospace}
+.pbtn{flex:1;padding:6px;border:1px solid var(--gpt-border);border-radius:5px;background:transparent;color:var(--gpt);font-size:10px;cursor:pointer;font-family:'DM Mono',monospace}
 .pbtn:hover{background:var(--gpt-bg)}
-.dbtn{flex:1;padding:5px;border:1px solid var(--border2);border-radius:5px;background:transparent;color:#888;font-size:10px;font-family:'DM Mono',monospace;text-align:center;text-decoration:none;display:block}
+.dbtn{flex:1;padding:6px;border:1px solid var(--border2);border-radius:5px;background:transparent;color:#888;font-size:10px;font-family:'DM Mono',monospace;text-align:center;text-decoration:none;display:block}
 .dbtn:hover{background:var(--surface2);color:#ccc}
 </style>
 </head>
 <body>
 <div class="header">
-  <h1>🌸 Crochet <span>Pipeline</span> v7</h1>
-  <p>car insult hook → 4x b-roll → 2x product showcase // gpt image 2 + kling 3.0</p>
+  <h1>🪝 Crochet <span>Hooks</span></h1>
+  <p>hooks only // one tap: image → video // master frame baked in</p>
 </div>
 
 <div class="global-refs">
@@ -95,9 +97,8 @@ const PROXY = 'https://crochet-proxy.kalenrattt.workers.dev/';
 const STORE = {
   master: 'https://i.ibb.co/s4CLq4j/33.png',
   girl: 'https://i.ibb.co/hx9BWcYk/b8c6e5d1a850216f407402376a826deb.jpg',
-  car_stall: 'https://i.ibb.co/4RgcSNsf/CAR-STALL-PHOTO.jpg',
-  garage: 'https://i.ibb.co/XfB0LL4D/83b912ea00c0113ad43d6ecc077330fc-1780564197-fastag2a.jpg',
-  dye: 'https://i.ibb.co/1JpttZCj/Young-girl-dipping-yarn.jpg',
+  friend: 'https://i.ibb.co/FkFvB8xw/1.png',
+  stall: 'https://i.ibb.co/QFy18YnS/Stallphoto1.jpg',
   blue_bouquet: 'https://i.ibb.co/QvyqVxPj/Blue.jpg',
   pink_bouquet: 'https://i.ibb.co/0RSL2JZ5/Pink.jpg',
   yellow_bouquet: 'https://i.ibb.co/k6g4MLJk/Yellow.jpg',
@@ -109,121 +110,65 @@ const set = (k,v) => { STORE[k]=v; };
 
 const GLOBALS = [
   {key:'master',label:'⭐ Master frame'},
-  {key:'girl',label:'Girl ref'},{key:'car_stall',label:'Car stall ref'},{key:'garage',label:'Garage ref'},
-  {key:'dye',label:'Dye ref'},{key:'blue_bouquet',label:'Blue bouquet'},{key:'pink_bouquet',label:'Pink bouquet'},
+  {key:'girl',label:'Girl ref'},{key:'friend',label:'Friend ref'},{key:'stall',label:'Stall ref'},
+  {key:'blue_bouquet',label:'Blue bouquet'},{key:'pink_bouquet',label:'Pink bouquet'},
   {key:'yellow_bouquet',label:'Yellow bouquet'},{key:'extra1',label:'Extra ref 1'},{key:'extra2',label:'Extra ref 2'}
 ];
 
-const VIDEOS = [
+// Each hook = one image clip + one video clip chained.
+const HOOKS = [
   {
-    id:'v1', title:'Video 1 — Car Insult Hook + Grind + Payoff',
-    clips:[
-      // HOOK
-      {
-        id:'c1', label:'Hook — Car Stall Image', model:'gpt', type:'image', outputKey:'c1_img',
-        refs:['girl','car_stall','blue_bouquet'],
-        notes:'👗 Simple casual top, jeans | 📍 Outdoor stall, car pulling up | 🎬 Candid bystander POV, freeze frame',
-        prompt:'The girl from the reference is standing behind her outdoor crochet flower stall. She is wearing a simple casual top and jeans. A car is slowly pulling up alongside her stall, the edge of the car just visible in frame. Blue crochet bouquets on the table. She is looking towards the car. Candid bystander POV from nearby. Natural daylight. Freeze frame from a candid iPhone video. No UI, no grain, no colour grading. iPhone 14 quality.',
-        aspect:'9:16', resolution:'1K'
-      },
-      {
-        id:'c2', label:'Hook — Car Insult Video', model:'kling', type:'video',
-        refs:['c1_img'],
-        notes:'🎬 5s — man asks "you make those yourself?" she says yes, he says "put that effort into the gym" drives off, she stands there deflated',
-        prompt:'A man in a car slowly pulls up to the girl\'s crochet flower stall. He leans out the window and asks "You make those yourself?" She smiles and nods yes. He pauses then says "Put that effort into the gym" and drives off laughing. She watches him leave, her smile fades, she stands there quietly deflated. Candid bystander POV. Camera mostly still. Natural daylight. No UI. iPhone 14 quality.',
-        aspect:'9:16', duration:'5', mode:'std', sound:true
-      },
-      // B-ROLL
-      {
-        id:'c3', label:'B-Roll 1 — Crocheting Kitchen Image', model:'gpt', type:'image', outputKey:'c3_img',
-        refs:['girl','blue_bouquet'],
-        notes:'👗 Apron over plain top | 📍 Kitchen counter, natural daylight | 🎬 She is the focus, crocheting, does not know filmed',
-        prompt:'The girl from the references is standing at her kitchen counter wearing an apron over a plain casual top. She is the main focus — face and upper body visible, crocheting a blue flower, looking down at her work. Does not know she is being filmed. Natural daylight. Candid angle. Freeze frame from a video. No UI, no grain, no colour grading. iPhone 14 quality.',
-        aspect:'9:16', resolution:'1K'
-      },
-      {
-        id:'c4', label:'B-Roll 1 — Crocheting Kitchen Video', model:'kling', type:'video',
-        refs:['c3_img'],
-        notes:'🎬 3s — crocheting, stable camera, slow movements, does not look up',
-        prompt:'The girl is standing at the kitchen counter crocheting a blue flower. Apron over plain top. She is the main focus. Slow careful movements, eyes on her work. Does not know she is being filmed. Fixed stable camera. Natural daylight. No UI. iPhone 14 quality.',
-        aspect:'9:16', duration:'3', mode:'std', sound:false
-      },
-      {
-        id:'c5', label:'B-Roll 2 — Dye Dipping Image', model:'gpt', type:'image', outputKey:'c5_img',
-        refs:['girl','dye','blue_bouquet'],
-        notes:'👗 Black latex gloves, apron | 📍 Garage studio | 🎬 Dipping yarn in blue dye, focused',
-        prompt:'The girl from the references is in her garage studio wearing black latex gloves and an apron. She is using tongs to carefully dip a white yarn ball into a tub of swirling blue dye. She is the main focus — face and upper body visible, focused and precise. Does not know she is being filmed. Natural garage lighting. Freeze frame. No UI, no grain, no colour grading. iPhone 14 quality.',
-        aspect:'9:16', resolution:'1K'
-      },
-      {
-        id:'c6', label:'B-Roll 2 — Dye Dipping Video', model:'kling', type:'video',
-        refs:['c5_img'],
-        notes:'🎬 3s — slow careful dip, like a scientist, stable camera',
-        prompt:'The girl is slowly and carefully dipping yarn into the blue dye using tongs. Black latex gloves and apron. She is the main focus. Moves with precision, focused. Does not know she is being filmed. Fixed stable camera. No UI. iPhone 14 quality.',
-        aspect:'9:16', duration:'3', mode:'std', sound:false
-      },
-      {
-        id:'c7', label:'B-Roll 3 — Night Crocheting Image', model:'gpt', type:'image', outputKey:'c7_img',
-        refs:['girl','garage','blue_bouquet'],
-        notes:'👗 Casual late night outfit, apron | 📍 Garage studio, warm fairy lights | 🎬 Late night grind, main focus',
-        prompt:'The girl from the references is sitting alone late at night in her garage studio, warm fairy lights glowing in the background. She is wearing a casual outfit with an apron. She is the main focus — face and upper body visible, crocheting a blue flower, totally focused. Does not know she is being filmed. Warm ambient lighting. Candid angle. Freeze frame. No UI, no grain, no colour grading. iPhone 14 quality.',
-        aspect:'9:16', resolution:'1K'
-      },
-      {
-        id:'c8', label:'B-Roll 3 — Night Crocheting Video', model:'kling', type:'video',
-        refs:['c7_img'],
-        notes:'🎬 3s — late night crocheting, fairy lights, stable camera',
-        prompt:'The girl is sitting alone late at night in her garage studio crocheting a blue flower. Warm fairy lights in background. Casual outfit with apron. She is the main focus. Slow careful movements. Does not know she is being filmed. Fixed stable camera. No UI. iPhone 14 quality.',
-        aspect:'9:16', duration:'3', mode:'std', sound:false
-      },
-      {
-        id:'c9', label:'B-Roll 4 — Assembly Image', model:'gpt', type:'image', outputKey:'c9_img',
-        refs:['girl','garage','blue_bouquet'],
-        notes:'👗 Apron, different angle | 📍 Garage studio workbench | 🎬 Hot gluing stems into bouquet, focused',
-        prompt:'The girl from the references is at her garage studio workbench wearing an apron. She is carefully hot gluing crochet flower stems together to form a blue bouquet. She is the main focus — face and upper body visible, precise and focused. Does not know she is being filmed. Natural studio lighting. Freeze frame. No UI, no grain, no colour grading. iPhone 14 quality.',
-        aspect:'9:16', resolution:'1K'
-      },
-      {
-        id:'c10', label:'B-Roll 4 — Assembly Video', model:'kling', type:'video',
-        refs:['c9_img'],
-        notes:'🎬 3s — hot gluing stems, slow precise, stable camera',
-        prompt:'The girl is at her garage workbench carefully hot gluing crochet flower stems together with a glue gun. Apron. She is the main focus. Slow and precise movements. Does not know she is being filmed. Fixed stable camera. No UI. iPhone 14 quality.',
-        aspect:'9:16', duration:'3', mode:'std', sound:false
-      },
-      // PRODUCT
-      {
-        id:'c11', label:'Product 1 — Holding Blue Bouquet Image', model:'gpt', type:'image', outputKey:'c11_img',
-        refs:['girl','blue_bouquet'],
-        notes:'👗 Clean simple outfit | 📍 Bedroom or clean wall background | 🎬 Holding blue bouquet, plain faced, looking at camera',
-        prompt:'The girl from the references is standing holding up the blue crochet bouquet at chest height with both hands. Plain neutral expression, not smiling, looking directly at camera. Clean simple background, natural daylight. Simple casual outfit. She is the main focus. No UI, no grain, no colour grading. iPhone 14 quality.',
-        aspect:'9:16', resolution:'1K'
-      },
-      {
-        id:'c12', label:'Product 1 — Blue Bouquet Video', model:'kling', type:'video',
-        refs:['c11_img'],
-        notes:'🎬 3s — holding blue bouquet, slight movement, plain faced',
-        prompt:'The girl is standing holding up the blue crochet bouquet at chest height. Plain neutral expression, looking at camera. Very subtle natural movement. Fixed camera. Natural daylight. No UI. iPhone 14 quality.',
-        aspect:'9:16', duration:'3', mode:'std', sound:false
-      },
-      {
-        id:'c13', label:'Product 2 — All 3 Bouquets Image', model:'gpt', type:'image', outputKey:'c13_img',
-        refs:['girl','blue_bouquet','pink_bouquet','yellow_bouquet'],
-        notes:'👗 Same clean outfit | 📍 Same background | 🎬 Holding all 3 bouquets together or showing them off',
-        prompt:'The girl from the references is standing holding all three crochet bouquets — blue, pink and yellow — fanned out in front of her at chest height. Plain neutral expression, looking at camera. Clean simple background, natural daylight. Simple casual outfit. She is the main focus. No UI, no grain, no colour grading. iPhone 14 quality.',
-        aspect:'9:16', resolution:'1K'
-      },
-      {
-        id:'c14', label:'Product 2 — All 3 Bouquets Video', model:'kling', type:'video',
-        refs:['c13_img'],
-        notes:'🎬 4s — showing off all 3 bouquets, slight tilt or movement to show them off, plain faced',
-        prompt:'The girl is standing holding all three crochet bouquets — blue, pink and yellow — fanned out in front of her. Plain neutral expression, looking at camera. She tilts them slightly to show them off. Fixed camera. Natural daylight. No UI. iPhone 14 quality.',
-        aspect:'9:16', duration:'4', mode:'std', sound:false
-      }
-    ]
+    id:'h1', title:'Hook — Mum POV (secret film)',
+    img:{
+      id:'h1img', refs:['master','girl','blue_bouquet'],
+      prompt:'POV shot filmed secretly from a doorway looking into a room, as if someone is peeking and filming. The girl from the reference (keep her face, hair and look consistent) is sitting at a table crocheting a blue flower, focused, unaware she is being filmed. Ignore the background and lighting of the reference — this is a normal cozy home room with daytime light, filmed from the doorway with part of the door frame visible on the edge. Candid sneaky home video feel. Freeze frame. No UI, no grain, no colour grading. iPhone 14 quality.',
+      aspect:'9:16', resolution:'1K'
+    },
+    vid:{
+      id:'h1vid', dur:'4', sound:true,
+      prompt:'POV filmed secretly from a doorway, the phone peeks around the door frame at the girl crocheting at a table, unaware. The camera moves slightly like someone sneakily filming. A womans voice off camera says quietly look at her, this is what she does all day. Candid sneaky home video. Natural daylight. No UI. iPhone 14 quality.'
+    }
+  },
+  {
+    id:'h2', title:'Hook — Crying Restock (happy tears)',
+    img:{
+      id:'h2img', refs:['master','girl','blue_bouquet','pink_bouquet','yellow_bouquet'],
+      prompt:'Selfie angle, the girl from the reference (keep her face, hair and look consistent) is filming herself, happy-crying with a few tears and a smile, overwhelmed with joy. She is surrounded by finished crochet bouquets and packed orders stacked around her. Ignore the background and lighting of the reference — this is a home room filled with boxes and bouquets ready to ship, warm daytime light. Emotional happy moment. Front on selfie. Freeze frame. No UI, no grain, no colour grading. iPhone 14 quality.',
+      aspect:'9:16', resolution:'1K'
+    },
+    vid:{
+      id:'h2vid', dur:'4', sound:true,
+      prompt:'Selfie video, the girl films herself happy-crying, wiping a tear and laughing softly, overwhelmed and grateful, surrounded by bouquets and packed orders. She looks at the camera, emotional and smiling. Subtle natural movement. Warm daylight. No UI. iPhone 14 quality.'
+    }
+  },
+  {
+    id:'h3', title:'Hook — Packing Orders 2am (grind)',
+    img:{
+      id:'h3img', refs:['master','girl','blue_bouquet'],
+      prompt:'The girl from the reference (keep her face, hair and look consistent) is packing crochet flower bouquets into shipping boxes late at night, looking tired but determined. Ignore the background and lighting of the reference — this is a home table at night with a small lamp, packing materials, boxes and bouquets spread out, warm dim lighting. Front on shot, she is the main focus, upper body visible, focused on packing. Candid, does not know she is filmed. Freeze frame. No UI, no grain, no colour grading. iPhone 14 quality.',
+      aspect:'9:16', resolution:'1K'
+    },
+    vid:{
+      id:'h3vid', dur:'4', sound:false,
+      prompt:'The girl packs crochet bouquets into shipping boxes late at night under a small lamp, tired but focused, moving carefully. Warm dim lighting, cozy late night grind mood. Does not know she is being filmed. Fixed stable camera. No UI. iPhone 14 quality.'
+    }
+  },
+  {
+    id:'h4', title:'Hook — Stall Boys (mock + slam)',
+    img:{
+      id:'h4img', refs:['master','girl','stall','blue_bouquet'],
+      prompt:'The girl from the reference (keep her face, hair and look consistent) is standing behind her outdoor market stall with crochet flower bouquets displayed on the table. A group of three teenage boys are standing in front of the stall, smirking and mocking her, one of them holding a blue crochet bouquet about to throw it down on the ground. The girl looks taken aback and hurt. Ignore the background and lighting of the reference for her — this is a busy outdoor market in daytime. Candid bystander video feel, filmed from the side a few metres away. Freeze frame. No UI, no grain, no colour grading. iPhone 14 quality.',
+      aspect:'9:16', resolution:'1K'
+    },
+    vid:{
+      id:'h4vid', dur:'5', sound:true,
+      prompt:'Candid bystander video at an outdoor market stall. A group of teenage boys mock the girl at her crochet flower stall, one says no ones gonna buy these and slams a blue bouquet down onto the ground, then they laugh and walk off. The girl stands there stunned and hurt, looking down at the bouquet on the floor. Camera mostly stable, filmed from the side. Natural daylight. No UI. iPhone 14 quality.'
+    }
   }
 ];
 
 function toB64(file){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(file);});}
+
 function renderGlobals(){
   const grid=document.getElementById('grefgrid');
   GLOBALS.forEach(g=>{
@@ -236,100 +181,128 @@ function renderGlobals(){
     },0);
   });
 }
+
 function renderPipeline(){
   const cont=document.getElementById('pipeline');
-  VIDEOS.forEach((vid,vi)=>{
+  HOOKS.forEach((hook,hi)=>{
     const card=document.createElement('div');card.className='vcard';
     const head=document.createElement('div');head.className='vhead';
-    head.innerHTML=`<div class="vnum">${vi+1}</div><div class="vtitle">${vid.title}</div><div class="chev o" id="ch_${vid.id}">▾</div>`;
-    const body=document.createElement('div');body.className='vbody o';body.id='vb_'+vid.id;
+    head.innerHTML=`<div class="vnum">${hi+1}</div><div class="vtitle">${hook.title}</div><div class="chev o" id="ch_${hook.id}">▾</div>`;
+    const body=document.createElement('div');body.className='vbody o';body.id='vb_'+hook.id;
     const clips=document.createElement('div');clips.className='clips';
-    vid.clips.forEach(c=>clips.appendChild(buildClip(c)));
+
+    // Full run button
+    const fullBtnWrap=document.createElement('div');
+    fullBtnWrap.innerHTML=`<button class="run-btn rfull" id="full_${hook.id}">⚡ Generate Full Hook (image → video)</button><div class="rarea" id="fullra_${hook.id}"></div>`;
+    clips.appendChild(fullBtnWrap);
+
+    clips.appendChild(buildImgClip(hook));
+    clips.appendChild(buildVidClip(hook));
     body.appendChild(clips);card.appendChild(head);card.appendChild(body);cont.appendChild(card);
-    head.addEventListener('click',()=>{body.classList.toggle('o');document.getElementById('ch_'+vid.id).classList.toggle('o',body.classList.contains('o'));});
+    head.addEventListener('click',()=>{body.classList.toggle('o');document.getElementById('ch_'+hook.id).classList.toggle('o',body.classList.contains('o'));});
+    setTimeout(()=>{document.getElementById('full_'+hook.id)?.addEventListener('click',()=>runFull(hook));},0);
   });
 }
-function buildClip(clip){
+
+function buildImgClip(hook){
+  const c=hook.img;
   const div=document.createElement('div');div.className='clip';
-  const mc={gpt:'tgpt',kling:'tkling'};
-  const ml={gpt:'GPT Image 2',kling:'Kling 3.0'};
-  const bc={gpt:'rg',kling:'rk'};
-  const bt=clip.type==='image'?'🖼 Generate Image':'🎬 Generate Video';
-  const chains=clip.refs.filter(r=>r.includes('_img')).map(r=>`<div class="chain-row">↳ uses ${r} from previous step</div>`).join('');
-  let s='';
-  if(clip.type==='image'){
-    s=`<div class="settings-row"><select class="setting-select" id="res_${clip.id}"><option value="1K" selected>1K</option><option value="2K">2K</option><option value="4K">4K</option></select><select class="setting-select" id="ar_${clip.id}"><option value="9:16" selected>9:16</option><option value="16:9">16:9</option><option value="1:1">1:1</option></select></div>`;
-  }else{
-    s=`<div class="settings-row"><select class="setting-select" id="dur_${clip.id}"><option value="3" ${clip.duration==='3'?'selected':''}>3s</option><option value="4" ${clip.duration==='4'?'selected':''}>4s</option><option value="5" ${clip.duration==='5'?'selected':''}>5s</option></select><select class="setting-select" id="ar_${clip.id}"><option value="9:16" selected>9:16</option><option value="16:9">16:9</option></select><select class="setting-select" id="mode_${clip.id}"><option value="std">std</option><option value="pro">pro</option></select><span class="setting-toggle ${clip.sound?'on':''}" id="snd_${clip.id}" onclick="toggleSound('${clip.id}')">🔊 ${clip.sound?'on':'off'}</span></div>`;
-  }
-  div.innerHTML=`<div class="clip-head"><span class="clip-label">${clip.label}</span><span class="mtag ${mc[clip.model]}">${ml[clip.model]}</span></div><div class="clip-notes">${clip.notes}</div><div class="prompt-header"><span class="prompt-label">Prompt</span><button class="edit-btn" onclick="toggleEdit('${clip.id}')">✏️ Edit</button></div><div class="clip-prompt-text" id="pt_${clip.id}">${clip.prompt}</div><textarea class="clip-prompt-edit" id="pe_${clip.id}">${clip.prompt}</textarea>${s}${chains}<div class="btn-row"><button class="run-btn ${bc[clip.model]}" id="btn_${clip.id}">${bt}</button></div><div class="rarea" id="ra_${clip.id}"></div>`;
-  setTimeout(()=>{document.getElementById('btn_'+clip.id)?.addEventListener('click',()=>runClip(clip));},0);
+  div.innerHTML=`<div class="clip-head"><span class="clip-label">Step 1 — Hook Image</span><span class="mtag tgpt">GPT Image 2</span></div><div class="clip-notes">⭐ master frame auto-added for consistency</div><div class="prompt-header"><span class="prompt-label">Prompt</span><button class="edit-btn" onclick="toggleEdit('${c.id}')">✏️ Edit</button></div><div class="clip-prompt-text" id="pt_${c.id}">${c.prompt}</div><textarea class="clip-prompt-edit" id="pe_${c.id}">${c.prompt}</textarea><div class="settings-row"><select class="setting-select" id="res_${c.id}"><option value="1K" selected>1K</option><option value="2K">2K</option></select><select class="setting-select" id="ar_${c.id}"><option value="9:16" selected>9:16</option><option value="16:9">16:9</option></select></div><div class="btn-row"><button class="run-btn rg" id="btn_${c.id}">🖼 Generate Image</button></div><div class="rarea" id="ra_${c.id}"></div>`;
+  setTimeout(()=>{document.getElementById('btn_'+c.id)?.addEventListener('click',()=>runImg(hook));},0);
   return div;
 }
+
+function buildVidClip(hook){
+  const c=hook.vid;
+  const div=document.createElement('div');div.className='clip';
+  div.innerHTML=`<div class="clip-head"><span class="clip-label">Step 2 — Hook Video</span><span class="mtag tkling">Kling 3.0</span></div><div class="chain-row">↳ uses the image from step 1</div><div class="prompt-header"><span class="prompt-label">Prompt</span><button class="edit-btn" onclick="toggleEdit('${c.id}')">✏️ Edit</button></div><div class="clip-prompt-text" id="pt_${c.id}">${c.prompt}</div><textarea class="clip-prompt-edit" id="pe_${c.id}">${c.prompt}</textarea><div class="settings-row"><select class="setting-select" id="dur_${c.id}"><option value="3" ${c.dur==='3'?'selected':''}>3s</option><option value="4" ${c.dur==='4'?'selected':''}>4s</option><option value="5" ${c.dur==='5'?'selected':''}>5s</option></select><select class="setting-select" id="ar_${c.id}"><option value="9:16" selected>9:16</option><option value="16:9">16:9</option></select><select class="setting-select" id="mode_${c.id}"><option value="std">std</option><option value="pro">pro</option></select><span class="setting-toggle ${c.sound?'on':''}" id="snd_${c.id}" onclick="toggleSound('${c.id}')">🔊 ${c.sound?'on':'off'}</span></div><div class="btn-row"><button class="run-btn rk" id="btn_${c.id}">🎬 Generate Video</button></div><div class="rarea" id="ra_${c.id}"></div>`;
+  setTimeout(()=>{document.getElementById('btn_'+c.id)?.addEventListener('click',()=>runVid(hook));},0);
+  return div;
+}
+
 window.toggleEdit=function(id){const pt=document.getElementById('pt_'+id);const pe=document.getElementById('pe_'+id);if(pe.style.display==='block'){pt.textContent=pe.value;pt.style.display='block';pe.style.display='none';}else{pe.style.display='block';pt.style.display='none';pe.focus();}};
 window.toggleSound=function(id){const el=document.getElementById('snd_'+id);const on=el.classList.toggle('on');el.textContent='🔊 '+(on?'on':'off');};
 function getPrompt(id){const pe=document.getElementById('pe_'+id);const pt=document.getElementById('pt_'+id);return pe?.style.display==='block'?pe.value:pt?.textContent||'';}
 function getSetting(id,type){return document.getElementById(type+'_'+id)?.value||null;}
 function isSoundOn(id){return document.getElementById('snd_'+id)?.classList.contains('on')||false;}
-function stat(id,msg,type){document.getElementById('ra_'+id).innerHTML=`<div class="smsg ${type}">${msg}</div>`;}
-function showImg(id,url,key){document.getElementById('ra_'+id).innerHTML=`<div><img class="rimg" src="${url}"><div class="result-btns"><button class="pbtn" onclick="saveRef('${key}','${url}',this)">✓ Use as start frame</button><a class="dbtn" href="${url}" target="_blank">⬇ Download</a></div></div>`;if(key)set(key,url);}
-function showVid(id,url){document.getElementById('ra_'+id).innerHTML=`<div><video class="rvid" src="${url}" controls loop></video><div class="result-btns"><a class="dbtn" href="${url}" target="_blank">⬇ Download</a></div></div>`;}
-window.saveRef=(k,url,btn)=>{set(k,url);btn.textContent='✓ Saved!';};
-function getRefs(clip){return clip.refs.map(r=>get(r)).filter(Boolean);}
+function stat(id,msg,type){const el=document.getElementById('ra_'+id);if(el)el.innerHTML=`<div class="smsg ${type}">${msg}</div>`;}
+function statFull(id,msg,type){const el=document.getElementById('fullra_'+id);if(el)el.innerHTML=`<div class="smsg ${type}">${msg}</div>`;}
+function showImg(id,url){document.getElementById('ra_'+id).innerHTML=`<div><img class="rimg" src="${url}"><div class="result-btns"><a class="dbtn" href="${url}" target="_blank">⬇ Download / Open</a></div></div>`;}
+function showVid(id,url){document.getElementById('ra_'+id).innerHTML=`<div><video class="rvid" src="${url}" controls loop playsinline></video><div class="result-btns"><a class="dbtn" href="${url}" target="_blank">⬇ Download / Open</a></div></div>`;}
+function getRefs(refKeys){let refs=refKeys.map(r=>get(r)).filter(Boolean);const master=get(MASTER_KEY);if(master&&!refs.includes(master))refs=[master,...refs];return refs;}
+
 async function proxyCall(action,payload){
   const res=await fetch(PROXY,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,payload})});
   if(!res.ok)throw new Error('Worker error '+res.status);
   return res.json();
 }
-async function pollTask(taskId,maxAttempts=60){
+async function pollTask(taskId,maxAttempts=80){
   for(let i=0;i<maxAttempts;i++){
     await new Promise(r=>setTimeout(r,5000));
     const data=await proxyCall('get_task',{taskId});
     const state=data?.data?.state;
     if(state==='success'){const result=JSON.parse(data.data.resultJson||'{}');return result.resultUrls?.[0]||null;}
-    if(state==='fail')throw new Error('Failed: '+data?.data?.failMsg);
+    if(state==='fail')throw new Error('Failed: '+(data?.data?.failMsg||'unknown'));
   }
   throw new Error('Timed out');
 }
-async function runClip(clip){
-  const btn=document.getElementById('btn_'+clip.id);
-  btn.disabled=true;stat(clip.id,'⏳ Generating…','sl');
-  try{
-    const refs=getRefs(clip);const prompt=getPrompt(clip.id);
-    const ar=getSetting(clip.id,'ar')||'9:16';
-    if(clip.model==='gpt')await runGPT(clip,refs,prompt,ar);
-    else await runKling(clip,refs,prompt,ar);
-  }catch(e){stat(clip.id,'❌ '+e.message,'se');console.error(e);}
+
+async function genImage(hook){
+  const c=hook.img;
+  const refs=getRefs(c.refs);
+  const prompt=getPrompt(c.id);
+  const ar=getSetting(c.id,'ar')||'9:16';
+  const res=getSetting(c.id,'res')||'1K';
+  const data=await proxyCall('generate_image_gpt',{prompt,aspect_ratio:ar,resolution:res,...(refs.length?{input_urls:refs.slice(0,16)}:{})});
+  const taskId=data?.data?.taskId;
+  if(!taskId)throw new Error('No task ID: '+JSON.stringify(data));
+  return await pollTask(taskId);
+}
+async function genVideo(hook,imgUrl){
+  const c=hook.vid;
+  const prompt=getPrompt(c.id);
+  const ar=getSetting(c.id,'ar')||'9:16';
+  const dur=getSetting(c.id,'dur')||'4';
+  const mode=getSetting(c.id,'mode')||'std';
+  const sound=isSoundOn(c.id);
+  const data=await proxyCall('generate_video_kling',{prompt,duration:dur,aspect_ratio:ar,mode,sound,multi_shots:true,multi_prompt:[{duration:parseInt(dur),prompt}],...(imgUrl?{image_urls:[imgUrl]}:{})});
+  const taskId=data?.data?.taskId;
+  if(!taskId)throw new Error('No task ID: '+JSON.stringify(data));
+  return await pollTask(taskId);
+}
+
+async function runImg(hook){
+  const btn=document.getElementById('btn_'+hook.img.id);btn.disabled=true;
+  stat(hook.img.id,'⏳ Creating image (~30s)…','sl');
+  try{const url=await genImage(hook);if(url){showImg(hook.img.id,url);hook._imgUrl=url;}else throw new Error('No image URL');}
+  catch(e){stat(hook.img.id,'❌ '+e.message,'se');}
   btn.disabled=false;
 }
-async function runGPT(clip,refs,prompt,ar){
-  stat(clip.id,'⏳ Creating image…','sl');
-  const res=getSetting(clip.id,'res')||'1K';
-  // Auto-include master frame first for consistency, then clip refs (dedup, skip if already master)
-  const master=get(MASTER_KEY);
-  let allRefs=refs.slice();
-  if(master && !allRefs.includes(master)) allRefs=[master, ...allRefs];
-  const data=await proxyCall('generate_image_gpt',{prompt,aspect_ratio:ar,resolution:res,...(allRefs.length?{input_urls:allRefs.slice(0,16)}:{})});
-  const taskId=data?.data?.taskId;
-  if(!taskId)throw new Error('No task ID: '+JSON.stringify(data));
-  stat(clip.id,'⏳ Waiting (~30s)…','sl');
-  const url=await pollTask(taskId);
-  if(url)showImg(clip.id,url,clip.outputKey);
-  else throw new Error('No image URL');
+async function runVid(hook){
+  const btn=document.getElementById('btn_'+hook.vid.id);btn.disabled=true;
+  const imgUrl=hook._imgUrl;
+  if(!imgUrl){stat(hook.vid.id,'❌ Generate the image first','se');btn.disabled=false;return;}
+  stat(hook.vid.id,'⏳ Creating video (~2min)…','sl');
+  try{const url=await genVideo(hook,imgUrl);if(url)showVid(hook.vid.id,url);else throw new Error('No video URL');}
+  catch(e){stat(hook.vid.id,'❌ '+e.message,'se');}
+  btn.disabled=false;
 }
-async function runKling(clip,refs,prompt,ar){
-  stat(clip.id,'⏳ Creating video…','sl');
-  const dur=getSetting(clip.id,'dur')||'4';
-  const mode=getSetting(clip.id,'mode')||'std';
-  const sound=isSoundOn(clip.id);
-  const data=await proxyCall('generate_video_kling',{prompt,duration:dur,aspect_ratio:ar,mode,sound,multi_shots:true,multi_prompt:[{duration:parseInt(dur),prompt}],...(refs[0]?{image_urls:[refs[0]]}:{})});
-  const taskId=data?.data?.taskId;
-  if(!taskId)throw new Error('No task ID: '+JSON.stringify(data));
-  stat(clip.id,'⏳ Waiting (~2min)…','sl');
-  const url=await pollTask(taskId,60);
-  if(url)showVid(clip.id,url);
-  else throw new Error('No video URL');
+async function runFull(hook){
+  const fb=document.getElementById('full_'+hook.id);fb.disabled=true;
+  statFull(hook.id,'⏳ Step 1: generating image…','sl');
+  try{
+    const imgUrl=await genImage(hook);
+    if(!imgUrl)throw new Error('Image failed');
+    showImg(hook.img.id,imgUrl);hook._imgUrl=imgUrl;
+    statFull(hook.id,'✅ Image done. ⏳ Step 2: generating video…','sl');
+    const vidUrl=await genVideo(hook,imgUrl);
+    if(!vidUrl)throw new Error('Video failed');
+    showVid(hook.vid.id,vidUrl);
+    statFull(hook.id,'✅ Hook complete! Download below.','ss');
+  }catch(e){statFull(hook.id,'❌ '+e.message,'se');}
+  fb.disabled=false;
 }
+
 renderGlobals();
 renderPipeline();
 </script>
