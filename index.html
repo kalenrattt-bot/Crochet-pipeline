@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Crochet Hooks Pipeline</title>
+<title>Drive-By Egg Hook</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
@@ -32,15 +32,10 @@ input[type=file]{display:none}
 .iurl{width:100%;font-size:10px;padding:3px 7px;border:1px solid var(--border);border-radius:5px;background:var(--surface2);color:#ccc;outline:none;font-family:'DM Mono',monospace}
 .iurl:focus{border-color:var(--border2)}
 .vcard{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:10px;overflow:hidden}
-.vhead{padding:12px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
-.vhead:hover{background:var(--surface2)}
+.vhead{padding:12px 14px;display:flex;align-items:center;gap:10px}
 .vnum{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;background:var(--surface2);color:var(--muted);flex-shrink:0;font-family:'DM Mono',monospace}
 .vtitle{flex:1;font-size:13px;font-weight:700;letter-spacing:-0.2px}
-.chev{font-size:12px;color:var(--muted);transition:transform .2s}
-.chev.o{transform:rotate(180deg)}
-.vbody{display:none;border-top:1px solid var(--border)}
-.vbody.o{display:block}
-.clips{padding:10px;display:flex;flex-direction:column;gap:8px}
+.clips{padding:10px;display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--border)}
 .clip{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:11px}
 .clip-head{display:flex;align-items:center;gap:8px;margin-bottom:7px}
 .clip-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);flex:1;font-family:'DM Mono',monospace}
@@ -53,7 +48,7 @@ input[type=file]{display:none}
 .edit-btn{font-size:9px;padding:2px 7px;border:1px solid var(--border2);border-radius:4px;background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Mono',monospace}
 .edit-btn:hover{color:var(--text);border-color:#444}
 .clip-prompt-text{font-size:11px;color:#555;line-height:1.5;background:#0a0a0a;border:1px solid var(--border);border-radius:5px;padding:7px 9px;font-family:'DM Mono',monospace;margin-bottom:7px}
-.clip-prompt-edit{width:100%;font-size:11px;color:#ccc;line-height:1.5;background:#0a0a0a;border:1px solid var(--kling-border);border-radius:5px;padding:7px 9px;font-family:'DM Mono',monospace;margin-bottom:7px;resize:vertical;min-height:80px;outline:none;display:none}
+.clip-prompt-edit{width:100%;font-size:11px;color:#ccc;line-height:1.5;background:#0a0a0a;border:1px solid var(--kling-border);border-radius:5px;padding:7px 9px;font-family:'DM Mono',monospace;margin-bottom:7px;resize:vertical;min-height:90px;outline:none;display:none}
 .settings-row{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;align-items:center}
 .setting-select{font-size:10px;padding:3px 7px;border:1px solid var(--border2);border-radius:4px;background:var(--surface);color:#aaa;font-family:'DM Mono',monospace;outline:none;cursor:pointer}
 .setting-toggle{font-size:10px;padding:3px 9px;border:1px solid var(--border2);border-radius:4px;background:var(--surface);color:#aaa;font-family:'DM Mono',monospace;cursor:pointer;user-select:none}
@@ -72,16 +67,14 @@ input[type=file]{display:none}
 .rimg{width:100%;max-height:300px;object-fit:cover;border-radius:6px;display:block;border:1px solid var(--border);margin-bottom:5px}
 .rvid{width:100%;max-height:340px;border-radius:6px;display:block;border:1px solid var(--border);margin-bottom:5px}
 .result-btns{display:flex;gap:5px}
-.pbtn{flex:1;padding:6px;border:1px solid var(--gpt-border);border-radius:5px;background:transparent;color:var(--gpt);font-size:10px;cursor:pointer;font-family:'DM Mono',monospace}
-.pbtn:hover{background:var(--gpt-bg)}
 .dbtn{flex:1;padding:6px;border:1px solid var(--border2);border-radius:5px;background:transparent;color:#888;font-size:10px;font-family:'DM Mono',monospace;text-align:center;text-decoration:none;display:block}
 .dbtn:hover{background:var(--surface2);color:#ccc}
 </style>
 </head>
 <body>
 <div class="header">
-  <h1>🪝 Crochet <span>Hooks</span></h1>
-  <p>hooks only // one tap: image → video // master frame baked in</p>
+  <h1>🥚 Drive-By <span>Egg</span> Hook</h1>
+  <p>one tap: image → video // standalone hook</p>
 </div>
 
 <div class="global-refs">
@@ -95,74 +88,32 @@ input[type=file]{display:none}
 const PROXY = 'https://crochet-proxy.kalenrattt.workers.dev/';
 
 const STORE = {
-  master: 'https://i.ibb.co/s4CLq4j/33.png',
   girl: 'https://i.ibb.co/hx9BWcYk/b8c6e5d1a850216f407402376a826deb.jpg',
-  friend: 'https://i.ibb.co/FkFvB8xw/1.png',
-  stall: 'https://i.ibb.co/QFy18YnS/Stallphoto1.jpg',
+  car_stall: 'https://i.ibb.co/4RgcSNsf/CAR-STALL-PHOTO.jpg',
   blue_bouquet: 'https://i.ibb.co/QvyqVxPj/Blue.jpg',
   pink_bouquet: 'https://i.ibb.co/0RSL2JZ5/Pink.jpg',
-  yellow_bouquet: 'https://i.ibb.co/k6g4MLJk/Yellow.jpg',
-  extra1: '', extra2: ''
+  yellow_bouquet: 'https://i.ibb.co/k6g4MLJk/Yellow.jpg'
 };
-const MASTER_KEY = 'master';
 const get = k => STORE[k]||null;
 const set = (k,v) => { STORE[k]=v; };
 
 const GLOBALS = [
-  {key:'master',label:'⭐ Master frame'},
-  {key:'girl',label:'Girl ref'},{key:'friend',label:'Friend ref'},{key:'stall',label:'Stall ref'},
+  {key:'girl',label:'Girl ref'},{key:'car_stall',label:'Car stall ref'},
   {key:'blue_bouquet',label:'Blue bouquet'},{key:'pink_bouquet',label:'Pink bouquet'},
-  {key:'yellow_bouquet',label:'Yellow bouquet'},{key:'extra1',label:'Extra ref 1'},{key:'extra2',label:'Extra ref 2'}
+  {key:'yellow_bouquet',label:'Yellow bouquet'}
 ];
 
-// Each hook = one image clip + one video clip chained.
 const HOOKS = [
   {
-    id:'h1', title:'Hook — Mum POV (secret film)',
+    id:'h1', title:'Drive-By Egg',
     img:{
-      id:'h1img', refs:['master','girl','blue_bouquet'],
-      prompt:'POV shot filmed secretly from a doorway looking into a room, as if someone is peeking and filming. The girl from the reference (keep her face, hair and look consistent) is sitting at a table crocheting a blue flower, focused, unaware she is being filmed. Ignore the background and lighting of the reference — this is a normal cozy home room with daytime light, filmed from the doorway with part of the door frame visible on the edge. Candid sneaky home video feel. Freeze frame. No UI, no grain, no colour grading. iPhone 14 quality.',
+      id:'h1img', refs:['girl','car_stall','blue_bouquet','pink_bouquet','yellow_bouquet'],
+      prompt:'First person POV filmed from inside a car through the open window on an iPhone. The car door and window frame are clearly visible on the left edge. A young woman with curly dark hair, gold necklace, casual outfit is standing upright behind her outdoor market stall about 3-4 metres away. Her table is filled with blue, pink and yellow crochet flower bouquets neatly displayed. She is looking towards the camera, head straight. Sunny outdoor market, natural daylight. Raw iPhone footage feel. No UI, no grain, no colour grading. iPhone 14 quality.',
       aspect:'9:16', resolution:'1K'
     },
     vid:{
       id:'h1vid', dur:'4', sound:true,
-      prompt:'POV filmed secretly from a doorway, the phone peeks around the door frame at the girl crocheting at a table, unaware. The camera moves slightly like someone sneakily filming. A womans voice off camera says quietly look at her, this is what she does all day. Candid sneaky home video. Natural daylight. No UI. iPhone 14 quality.'
-    }
-  },
-  {
-    id:'h2', title:'Hook — Crying Restock (happy tears)',
-    img:{
-      id:'h2img', refs:['master','girl','blue_bouquet','pink_bouquet','yellow_bouquet'],
-      prompt:'Selfie angle, the girl from the reference (keep her face, hair and look consistent) is filming herself, happy-crying with a few tears and a smile, overwhelmed with joy. She is surrounded by finished crochet bouquets and packed orders stacked around her. Ignore the background and lighting of the reference — this is a home room filled with boxes and bouquets ready to ship, warm daytime light. Emotional happy moment. Front on selfie. Freeze frame. No UI, no grain, no colour grading. iPhone 14 quality.',
-      aspect:'9:16', resolution:'1K'
-    },
-    vid:{
-      id:'h2vid', dur:'4', sound:true,
-      prompt:'Selfie video, the girl films herself happy-crying, wiping a tear and laughing softly, overwhelmed and grateful, surrounded by bouquets and packed orders. She looks at the camera, emotional and smiling. Subtle natural movement. Warm daylight. No UI. iPhone 14 quality.'
-    }
-  },
-  {
-    id:'h3', title:'Hook — Packing Orders 2am (grind)',
-    img:{
-      id:'h3img', refs:['master','girl','blue_bouquet'],
-      prompt:'The girl from the reference (keep her face, hair and look consistent) is packing crochet flower bouquets into shipping boxes late at night, looking tired but determined. Ignore the background and lighting of the reference — this is a home table at night with a small lamp, packing materials, boxes and bouquets spread out, warm dim lighting. Front on shot, she is the main focus, upper body visible, focused on packing. Candid, does not know she is filmed. Freeze frame. No UI, no grain, no colour grading. iPhone 14 quality.',
-      aspect:'9:16', resolution:'1K'
-    },
-    vid:{
-      id:'h3vid', dur:'4', sound:false,
-      prompt:'The girl packs crochet bouquets into shipping boxes late at night under a small lamp, tired but focused, moving carefully. Warm dim lighting, cozy late night grind mood. Does not know she is being filmed. Fixed stable camera. No UI. iPhone 14 quality.'
-    }
-  },
-  {
-    id:'h4', title:'Hook — Stall Boys (mock + slam)',
-    img:{
-      id:'h4img', refs:['master','girl','stall','blue_bouquet'],
-      prompt:'The girl from the reference (keep her face, hair and look consistent) is standing behind her outdoor market stall with crochet flower bouquets displayed on the table. A group of three teenage boys are standing in front of the stall, smirking and mocking her, one of them holding a blue crochet bouquet about to throw it down on the ground. The girl looks taken aback and hurt. Ignore the background and lighting of the reference for her — this is a busy outdoor market in daytime. Candid bystander video feel, filmed from the side a few metres away. Freeze frame. No UI, no grain, no colour grading. iPhone 14 quality.',
-      aspect:'9:16', resolution:'1K'
-    },
-    vid:{
-      id:'h4vid', dur:'5', sound:true,
-      prompt:'Candid bystander video at an outdoor market stall. A group of teenage boys mock the girl at her crochet flower stall, one says no ones gonna buy these and slams a blue bouquet down onto the ground, then they laugh and walk off. The girl stands there stunned and hurt, looking down at the bouquet on the floor. Camera mostly stable, filmed from the side. Natural daylight. No UI. iPhone 14 quality.'
+      prompt:'A young man is filming the girl at her crochet flower stall from inside his car — we are his camera POV the entire time. He says you make these yourself? Put that effort into the gym. The girl does not reply. He immediately throws an egg at her face through the window, it hits her directly, egg breaks on impact. She stands there shocked. Camera mostly stable. Raw iPhone footage. Natural daylight. No UI. iPhone 14 quality.'
     }
   }
 ];
@@ -187,19 +138,14 @@ function renderPipeline(){
   HOOKS.forEach((hook,hi)=>{
     const card=document.createElement('div');card.className='vcard';
     const head=document.createElement('div');head.className='vhead';
-    head.innerHTML=`<div class="vnum">${hi+1}</div><div class="vtitle">${hook.title}</div><div class="chev o" id="ch_${hook.id}">▾</div>`;
-    const body=document.createElement('div');body.className='vbody o';body.id='vb_'+hook.id;
+    head.innerHTML=`<div class="vnum">${hi+1}</div><div class="vtitle">${hook.title}</div>`;
     const clips=document.createElement('div');clips.className='clips';
-
-    // Full run button
     const fullBtnWrap=document.createElement('div');
     fullBtnWrap.innerHTML=`<button class="run-btn rfull" id="full_${hook.id}">⚡ Generate Full Hook (image → video)</button><div class="rarea" id="fullra_${hook.id}"></div>`;
     clips.appendChild(fullBtnWrap);
-
     clips.appendChild(buildImgClip(hook));
     clips.appendChild(buildVidClip(hook));
-    body.appendChild(clips);card.appendChild(head);card.appendChild(body);cont.appendChild(card);
-    head.addEventListener('click',()=>{body.classList.toggle('o');document.getElementById('ch_'+hook.id).classList.toggle('o',body.classList.contains('o'));});
+    card.appendChild(head);card.appendChild(clips);cont.appendChild(card);
     setTimeout(()=>{document.getElementById('full_'+hook.id)?.addEventListener('click',()=>runFull(hook));},0);
   });
 }
@@ -207,7 +153,7 @@ function renderPipeline(){
 function buildImgClip(hook){
   const c=hook.img;
   const div=document.createElement('div');div.className='clip';
-  div.innerHTML=`<div class="clip-head"><span class="clip-label">Step 1 — Hook Image</span><span class="mtag tgpt">GPT Image 2</span></div><div class="clip-notes">⭐ master frame auto-added for consistency</div><div class="prompt-header"><span class="prompt-label">Prompt</span><button class="edit-btn" onclick="toggleEdit('${c.id}')">✏️ Edit</button></div><div class="clip-prompt-text" id="pt_${c.id}">${c.prompt}</div><textarea class="clip-prompt-edit" id="pe_${c.id}">${c.prompt}</textarea><div class="settings-row"><select class="setting-select" id="res_${c.id}"><option value="1K" selected>1K</option><option value="2K">2K</option></select><select class="setting-select" id="ar_${c.id}"><option value="9:16" selected>9:16</option><option value="16:9">16:9</option></select></div><div class="btn-row"><button class="run-btn rg" id="btn_${c.id}">🖼 Generate Image</button></div><div class="rarea" id="ra_${c.id}"></div>`;
+  div.innerHTML=`<div class="clip-head"><span class="clip-label">Step 1 — Hook Image</span><span class="mtag tgpt">GPT Image 2</span></div><div class="clip-notes">car POV, all 3 bouquets out, she's 3-4m back</div><div class="prompt-header"><span class="prompt-label">Prompt</span><button class="edit-btn" onclick="toggleEdit('${c.id}')">✏️ Edit</button></div><div class="clip-prompt-text" id="pt_${c.id}">${c.prompt}</div><textarea class="clip-prompt-edit" id="pe_${c.id}">${c.prompt}</textarea><div class="settings-row"><select class="setting-select" id="res_${c.id}"><option value="1K" selected>1K</option><option value="2K">2K</option></select><select class="setting-select" id="ar_${c.id}"><option value="9:16" selected>9:16</option><option value="16:9">16:9</option></select></div><div class="btn-row"><button class="run-btn rg" id="btn_${c.id}">🖼 Generate Image</button></div><div class="rarea" id="ra_${c.id}"></div>`;
   setTimeout(()=>{document.getElementById('btn_'+c.id)?.addEventListener('click',()=>runImg(hook));},0);
   return div;
 }
@@ -229,7 +175,7 @@ function stat(id,msg,type){const el=document.getElementById('ra_'+id);if(el)el.i
 function statFull(id,msg,type){const el=document.getElementById('fullra_'+id);if(el)el.innerHTML=`<div class="smsg ${type}">${msg}</div>`;}
 function showImg(id,url){document.getElementById('ra_'+id).innerHTML=`<div><img class="rimg" src="${url}"><div class="result-btns"><a class="dbtn" href="${url}" target="_blank">⬇ Download / Open</a></div></div>`;}
 function showVid(id,url){document.getElementById('ra_'+id).innerHTML=`<div><video class="rvid" src="${url}" controls loop playsinline></video><div class="result-btns"><a class="dbtn" href="${url}" target="_blank">⬇ Download / Open</a></div></div>`;}
-function getRefs(refKeys){let refs=refKeys.map(r=>get(r)).filter(Boolean);const master=get(MASTER_KEY);if(master&&!refs.includes(master))refs=[master,...refs];return refs;}
+function getRefs(refKeys){return refKeys.map(r=>get(r)).filter(Boolean);}
 
 async function proxyCall(action,payload){
   const res=await fetch(PROXY,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,payload})});
@@ -246,7 +192,6 @@ async function pollTask(taskId,maxAttempts=80){
   }
   throw new Error('Timed out');
 }
-
 async function genImage(hook){
   const c=hook.img;
   const refs=getRefs(c.refs);
@@ -270,7 +215,6 @@ async function genVideo(hook,imgUrl){
   if(!taskId)throw new Error('No task ID: '+JSON.stringify(data));
   return await pollTask(taskId);
 }
-
 async function runImg(hook){
   const btn=document.getElementById('btn_'+hook.img.id);btn.disabled=true;
   stat(hook.img.id,'⏳ Creating image (~30s)…','sl');
