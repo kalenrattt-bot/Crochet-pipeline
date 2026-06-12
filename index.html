@@ -88,8 +88,10 @@ input[type=file]{display:none}
 const PROXY = 'https://crochet-proxy.kalenrattt.workers.dev/';
 
 const STORE = {
+  master: 'https://i.ibb.co/s4CLq4j/33.png',
   girl: 'https://i.ibb.co/hx9BWcYk/b8c6e5d1a850216f407402376a826deb.jpg',
   car_stall: 'https://i.ibb.co/4RgcSNsf/CAR-STALL-PHOTO.jpg',
+  stall: 'https://i.ibb.co/QFy18YnS/Stallphoto1.jpg',
   blue_bouquet: 'https://i.ibb.co/QvyqVxPj/Blue.jpg',
   pink_bouquet: 'https://i.ibb.co/0RSL2JZ5/Pink.jpg',
   yellow_bouquet: 'https://i.ibb.co/k6g4MLJk/Yellow.jpg'
@@ -98,7 +100,8 @@ const get = k => STORE[k]||null;
 const set = (k,v) => { STORE[k]=v; };
 
 const GLOBALS = [
-  {key:'girl',label:'Girl ref'},{key:'car_stall',label:'Car stall ref'},
+  {key:'master',label:'⭐ Master frame'},
+  {key:'girl',label:'Girl ref'},{key:'car_stall',label:'Car stall ref'},{key:'stall',label:'Stall ref'},
   {key:'blue_bouquet',label:'Blue bouquet'},{key:'pink_bouquet',label:'Pink bouquet'},
   {key:'yellow_bouquet',label:'Yellow bouquet'}
 ];
@@ -114,6 +117,30 @@ const HOOKS = [
     vid:{
       id:'h1vid', dur:'4', sound:true,
       prompt:'A young man is filming the girl at her crochet flower stall from inside his car — we are his camera POV the entire time. He says you make these yourself? Put that effort into the gym. The girl does not reply. He immediately throws an egg at her face through the window, it hits her directly, egg breaks on impact. She stands there shocked. Camera mostly stable. Raw iPhone footage. Natural daylight. No UI. iPhone 14 quality.'
+    }
+  },
+  {
+    id:'h2', title:'Stall — Snooty Customer',
+    img:{
+      id:'h2img', refs:['master','girl','stall','blue_bouquet'],
+      prompt:'The girl from the reference (keep her face, hair and look consistent) is standing behind her outdoor market stall with crochet flower bouquets displayed. A well dressed older woman in her 50s stands in front of the stall holding a blue crochet bouquet, inspecting it with a slightly unimpressed raised eyebrow. Ignore the background and lighting of the reference for her — this is a busy outdoor market in daytime. Candid bystander video filmed from the side a few metres away, steady. Freeze frame. No UI, no grain, no colour grading. iPhone 14 quality.',
+      aspect:'9:16', resolution:'1K'
+    },
+    vid:{
+      id:'h2vid', dur:'5', sound:true,
+      prompt:'Candid bystander video, camera stays in the exact same fixed position the whole time and does not move. A well dressed older woman holds up the blue crochet bouquet, looks at it and says oh sweetie... you really think people will pay for this? in a condescending tone, then sets it back down and walks off. The girl behind the stall stands there, her smile fading. Camera completely still and locked off. Natural daylight. No UI. iPhone 14 quality.'
+    }
+  },
+  {
+    id:'h3', title:'Stall — Snapchat Rude Girls (POV)',
+    img:{
+      id:'h3img', refs:['master','girl','stall','blue_bouquet'],
+      prompt:'POV handheld phone video filmed by a friend, fairly close up. In frame, two teenage girls stand at an outdoor market crochet flower stall, one holding up a blue crochet bouquet and laughing while looking towards the camera. Behind the stall, the girl from the reference (keep her face, hair and look consistent) is standing watching them. Ignore the background and lighting of the reference for her — this is a busy outdoor market in daytime. Slightly shaky candid Snapchat style phone footage. Freeze frame. No UI, no grain, no colour grading. iPhone 14 quality.',
+      aspect:'9:16', resolution:'1K'
+    },
+    vid:{
+      id:'h3vid', dur:'5', sound:true,
+      prompt:'Handheld Snapchat style phone video with slight natural shake, filmed by their friend. One teenage girl holds up the blue crochet bouquet, looks at the camera then at her friend beside her, laughing, and says yo look at this... who is actually buying these? talking to both the camera and her friend like theyre all in on it. Her friend laughs too. The girl at the stall looks over. Candid real phone footage feel. Natural daylight. No UI. iPhone 14 quality.'
     }
   }
 ];
